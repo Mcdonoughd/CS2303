@@ -2,7 +2,7 @@
 /*
  * tellerQueue.cpp
  *	 Created on: 9/29/2017
- *      Authors: Daniel McDonough and Surya Vadivazhagu
+ *      Authors: Daniel McDonough and Surya Vadivazhagu!
  */
 #include "tellerQueue.h"
 #include <iostream>
