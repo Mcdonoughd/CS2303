@@ -4,6 +4,7 @@
 #include "Customer.h"
 #include "Teller.h"
 #include <iostream>
+#include <list>
 using namespace std;
 //qSim #customer #teller #simtime #avgservicetime <seed>
 
@@ -19,7 +20,6 @@ void custFarm(int customers,int simtime){
 		custObjPtr[i].setArrTime(simtime);
 	}
 }
-
 void tellerFarm(int teller,int servtime){
 	//Tellerfarm is an array of tellers
 	Teller* tellObjPtr = new Teller[teller];
@@ -32,8 +32,8 @@ void tellerFarm(int teller,int servtime){
 	}
 }
 int main(int argc, char* argv[]){
-
 	if(argc < 4){
+
 		cout << "Please Initialize Proper Arguments!"<< endl;
 		return 1;
 	}
@@ -47,6 +47,7 @@ int main(int argc, char* argv[]){
 				srand(atoi(argv[5]));
 			}
 	}
+
 	tellerFarm(teller,servtime);
 	custFarm(customers,simtime);
 }
