@@ -13,7 +13,8 @@
 using namespace std;
 class tellerQueue{
 private:
-	priority_queue <Customer> tellerLine;
+	priority_queue <int> tellerLine; //tellerline is populated with customer ID
+	//write function to search through customers and check ID's in Customer.cpp
 	int tellerLineLength;
 public:
 	tellerQueue();
@@ -21,7 +22,7 @@ public:
 	void setTellerLineLength();
 	void addCustomer(Customer Jim);
 	void removeCustomer(Customer Jim);
-	~tellerQueue();
+	virtual ~tellerQueue();
 };
 
 
