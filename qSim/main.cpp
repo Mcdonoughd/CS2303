@@ -9,12 +9,24 @@ using namespace std;
 
 //simulation time will be a linked list of seconds
 
-void custFarm(int customers){
+void custFarm(int customers,int simtime){
+	Customer* custObjPtr = new Customer[customers];
+	//customerFarm is an array of customers
 	for(int i = 0; i <= customers; i++){
+		//Customer[i]
+	}
+}
+void tellerFarm(int teller,int servtime){
+	//Tellerfarm is an array of tellers
+	Teller* tellObjPtr = new Teller[teller];
+	for(int i = 0; i <= teller-1;i++){
+		tellObjPtr[i].getidleTime();
+
 
 	}
 }
 int main(int argc, char* argv[]){
+
 	if(argc < 4){
 		cout << "Please Initialize Proper Arguments!"<< endl;
 		return 1;
@@ -29,5 +41,5 @@ int main(int argc, char* argv[]){
 				srand(atoi(argv[5]));
 			}
 	}
-
+	tellerFarm(teller,servtime);
 }
