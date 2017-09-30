@@ -26,6 +26,8 @@ public:
 	void setidleTime(int idle);
 	void setservTime(int stime);
 	void settotalServed(int serv);
+	int getid();
+	void setid(int id);
 	Teller();
 	Teller(int id, int avgServTime);
 	~Teller();
