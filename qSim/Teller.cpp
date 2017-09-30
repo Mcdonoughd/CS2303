@@ -17,15 +17,15 @@ return this->totalServed;
 void Teller::settotalServed(int serv){
 this->totalServed = serv;
 }
-float getservTime(){
-
+float Teller::getservTime(){
+return this->servTime;
 }
-void setservTime(){
-
+void Teller::setservTime(int stime){
+this->servTime = stime;
 }
-int getidleTime(){
-
+int Teller::getidleTime(){
+return idleTime;//this->idleTime;//
 }
-void setidleTime(){
-
+void Teller::setidleTime(int idle){
+this->idleTime = idle;
 }
