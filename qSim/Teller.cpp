@@ -1,14 +1,13 @@
 #include "Teller.h"
 Teller::Teller(){
 	this->totalServed = 0;
-	this->servTime = rand();
+	this->servTime = 0;
 	this->idleTime = 0;
-	this->id = 0;
+	this->ID = 0;
 }
 
-
 Teller::Teller(int id, int avgServTime){
-	this->id = id;
+	this->ID = id;
 	this->totalServed = 0;
 	this->servTime = 2*avgServTime*rand()/float(RAND_MAX);
 	this->idleTime = 0;
@@ -34,10 +33,10 @@ void Teller::setidleTime(int idle){
 	this->idleTime = idle;
 }
 int Teller::getid(){
-	return this->id;
+	return this->ID;
 }
 void Teller::setid(int id){
-	this->id = id;
+	this->ID = id;
 }
 Teller::~Teller(){
 

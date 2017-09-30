@@ -15,7 +15,7 @@ using namespace std;
 
 class Teller : public Event {
 private:
-	int id;
+	int ID;
 	int totalServed;
 	float servTime;
 	int idleTime;
