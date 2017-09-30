@@ -16,12 +16,12 @@ void custFarm(int customers,int simtime){
 		//Customer[i]
 	}
 }
+
 void tellerFarm(int teller,int servtime){
 	//Tellerfarm is an array of tellers
-	Teller* tellObjPtr = new Teller[teller];
+	Teller* tellObjPtr = new Teller[teller-1];
 	for(int i = 0; i <= teller-1;i++){
 		tellObjPtr[i].getservTime();
-
 
 	}
 }
