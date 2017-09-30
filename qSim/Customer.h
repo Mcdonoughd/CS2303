@@ -17,12 +17,11 @@ class Customer:public Event{
 
 private:
 	void action();
-
-
-public:
 	int ID = 0;
 	float arrTime = 0;
 	int waitTime =0;
+
+public:
 	Customer();
 	Customer(int ID, int simTime);
 	~Customer();
@@ -33,4 +32,5 @@ public:
 	int getArrTime();
 	void setArrTime(int arrTime);
 };
+
 #endif /* EVENT_H_ */

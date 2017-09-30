@@ -13,7 +13,9 @@ void custFarm(int customers,int simtime){
 	Customer* custObjPtr = new Customer[customers];
 	//customerFarm is an array of customers
 	for(int i = 0; i <= customers; i++){
+		//initialize id for all customer
 		custObjPtr[i].setid(i+1);
+		//initalize random arrival times
 		custObjPtr[i].setArrTime(simtime);
 	}
 }
@@ -23,7 +25,9 @@ void tellerFarm(int teller,int servtime){
 	Teller* tellObjPtr = new Teller[teller];
 	for(int i = 0; i <= teller-1;i++){
 		//tellObjPtr[i].getservTime();
+		//initalize id for all tellers
 		tellObjPtr[i].setid(i+1);
+		//inialize random service time
 		tellObjPtr[i].setservTime(servtime);
 	}
 }

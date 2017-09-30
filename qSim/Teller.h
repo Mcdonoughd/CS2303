@@ -11,15 +11,19 @@
 #include <iostream>
 #include <string>
 #include "Event.h"
+#include "tellerQueue.h"
 using namespace std;
 
 class Teller : public Event {
 private:
-	int ID;
-	int totalServed;
-	float servTime;
-	int idleTime;
+	int ID; //A teller's ID
+	int totalServed; //Count of how many customers a teller has served
+	float servTime; //the amount of time it takes for a teller to serve a customer
+	int idleTime; // the amount of time a teller goes inactive after serving a customer
+	int workingtime; // the current time at which a teller is working
+	tellerQueue tellerLine; //the line in front of a teller
 public:
+	tellerQueue getTellerQueue();
 	int gettotalServed();
 	float getservTime();
 	int getidleTime();

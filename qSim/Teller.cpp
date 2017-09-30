@@ -5,6 +5,8 @@ Teller::Teller(){
 	this->servTime = 0;
 	this->idleTime = 0;
 	this->ID = 0;
+	this->workingtime = 0;
+	new tellerQueue;
 }
 
 Teller::Teller(int id, int avgServTime){
@@ -12,7 +14,10 @@ Teller::Teller(int id, int avgServTime){
 	this->totalServed = 0;
 	this->servTime = 2*avgServTime*rand()/float(RAND_MAX);
 	this->idleTime = 0;
+	this->workingtime = 0;
+	new tellerQueue;
 }
+
 int Teller::gettotalServed(){
 	return this->totalServed;
 }
