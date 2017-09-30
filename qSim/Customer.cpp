@@ -9,6 +9,24 @@ Customer::Customer(int id, int simTime){
 	waitTime = 0;
 	arrTime = simTime * rand()/float(RAND_MAX);
 }
+int Customer::getid(){
+	return this->ID;
+}
+void Customer::setid(int ID){
+	this->ID = ID;
+}
+int Customer::getWaitTime(){
+	return this->waitTime;
+}
+void Customer::setWaitTime(int waitTime){
+	this->waitTime = waitTime;
+}
+int Customer:: getArrTime(){
+	return this->arrTime;
+}
+void Customer::setArrTime(int arrTime){
+	this->arrTime = arrTime;
+}
 Customer::~Customer(){
 
 }

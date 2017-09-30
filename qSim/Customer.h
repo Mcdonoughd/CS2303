@@ -26,6 +26,11 @@ public:
 	Customer();
 	Customer(int ID, int simTime);
 	~Customer();
+	int getid();
+	void setid(int ID);
+	int getWaitTime();
+	void setWaitTime(int waitTime);
+	int getArrTime();
+	void setArrTime(int arrTime);
 };
-
 #endif /* EVENT_H_ */
