@@ -20,7 +20,7 @@ void Teller::settotalServed(int serv){
 	this->totalServed = serv;
 }
 float Teller::getservTime(){
-	printf("%f\n",this->servTime);
+	printf("%.2f\n",this->servTime);
 	return this->servTime;
 }
 void Teller::setservTime(int stime){
