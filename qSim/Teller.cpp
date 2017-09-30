@@ -33,7 +33,7 @@ int Teller::getidleTime(){
 void Teller::setidleTime(int idle){
 	this->idleTime = idle;
 }
-// what's up danny. jjj ff
+// what's up danny. jjj ff gg hh
 Teller::~Teller(){
 
 }
