@@ -25,8 +25,8 @@ void Customer::setWaitTime(int waitTime){
 int Customer:: getArrTime(){
 	return this->arrTime;
 }
-void Customer::setArrTime(int arrTime){
-	this->arrTime = arrTime;
+void Customer::setArrTime(int simTime){
+	this->arrTime = simTime * rand()/float(RAND_MAX);
 }
 Customer::~Customer(){
 

@@ -13,7 +13,8 @@ void custFarm(int customers,int simtime){
 	Customer* custObjPtr = new Customer[customers];
 	//customerFarm is an array of customers
 	for(int i = 0; i <= customers; i++){
-		//Customer[i]
+		custObjPtr[i].setid(i+1);
+		custObjPtr[i].setArrTime(simtime);
 	}
 }
 
