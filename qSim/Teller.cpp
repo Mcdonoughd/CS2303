@@ -33,7 +33,12 @@ int Teller::getidleTime(){
 void Teller::setidleTime(int idle){
 	this->idleTime = idle;
 }
-
+int Teller::getid(){
+	return this->id;
+}
+void Teller::setid(int id){
+	this->id = id;
+}
 Teller::~Teller(){
 
 }
