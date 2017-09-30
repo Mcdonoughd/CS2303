@@ -21,8 +21,9 @@ void tellerFarm(int teller,int servtime){
 	//Tellerfarm is an array of tellers
 	Teller* tellObjPtr = new Teller[teller];
 	for(int i = 0; i <= teller-1;i++){
-		tellObjPtr[i].getservTime();
-
+		//tellObjPtr[i].getservTime();
+		tellObjPtr[i].setid(i+1);
+		tellObjPtr[i].setservTime(servtime);
 	}
 }
 int main(int argc, char* argv[]){
@@ -42,4 +43,5 @@ int main(int argc, char* argv[]){
 			}
 	}
 	tellerFarm(teller,servtime);
+	custFarm(customers,simtime);
 }
