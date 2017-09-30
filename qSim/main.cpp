@@ -19,7 +19,7 @@ void custFarm(int customers,int simtime){
 
 void tellerFarm(int teller,int servtime){
 	//Tellerfarm is an array of tellers
-	Teller* tellObjPtr = new Teller[teller-1];
+	Teller* tellObjPtr = new Teller[teller];
 	for(int i = 0; i <= teller-1;i++){
 		tellObjPtr[i].getservTime();
 
