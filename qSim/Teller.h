@@ -2,7 +2,7 @@
  * Teller.h
  *
  *  Created on: Oct 8, 2017
- *      Author: Daniel Mcdonough
+ *      Authors: Daniel Mcdonough and Surya Vadivazhagu
  */
 
 #ifndef TELLER_H_

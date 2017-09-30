@@ -1,3 +1,4 @@
+//Teller.cpp written by Daniel McDonough and Surya Vadivazhagu
 #include "Teller.h"
 Teller::Teller(){
 	this->totalServed = 0;

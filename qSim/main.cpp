@@ -1,4 +1,4 @@
-//qSim by Daniel McDonough 9/29/17
+//qSim by Daniel McDonough and Surya Vadivazhagu 9/29/17
 #include <cstdlib>
 #include "Event.h"
 #include "Customer.h"

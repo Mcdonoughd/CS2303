@@ -2,7 +2,7 @@
  * Customer.h
  *
  *  Created on: Oct 8, 2017
- *      Author: Daniel McDonough
+ *      Authors: Daniel McDonough and Surya Vadivazhagu
  */
 
 #ifndef CUSTOMER_H_

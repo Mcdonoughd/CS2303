@@ -1,3 +1,4 @@
+//Customer.cpp by Daniel McDonough and Surya Vadivazhagu
 #include "Customer.h"
 Customer::Customer(){
 	ID = 0;
