@@ -10,12 +10,15 @@
 using namespace std;
 
 tellerQueue::tellerQueue(){
-	//tellerLine;
-	tellerLineLength = 0;
+	tellerLineLength = this->getTellerLineLength();
 }
+
 int tellerQueue::getTellerLineLength(){
 	this->setTellerLineLength();
 	return this->tellerLineLength;
+}
+void tellerQueue::setTellerLineLength(){
+	this->tellerLineLength = this->tellerLine.size();
 }
 void tellerQueue::addCustomer(Customer Jim){
 
@@ -23,6 +26,6 @@ void tellerQueue::addCustomer(Customer Jim){
 void tellerQueue::removeCustomer(Customer Jim){
 
 }
-tellerQueue::~tellerQueue(){
+ tellerQueue::~tellerQueue(){
 
 }

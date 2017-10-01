@@ -3,6 +3,8 @@
 #include "Event.h"
 #include "Customer.h"
 #include "Teller.h"
+#include "tellerQueue.h"
+#include "eventQueue.h"
 #include <iostream>
 #include <list>
 using namespace std;
@@ -11,6 +13,7 @@ using namespace std;
 //simulation time will be a linked list of seconds
 
 void custFarm(int customers,int simtime){
+
 	Customer* custObjPtr = new Customer[customers];
 	//customerFarm is an array of customers
 	for(int i = 0; i <= customers; i++){
