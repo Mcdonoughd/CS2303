@@ -21,7 +21,8 @@ public:
 	int getTellerLineLength();
 	void setTellerLineLength();
 	void addCustomer(Customer Jim);
-	void removeCustomer(Customer Jim);
+	void removeCustomer();
+	void removeCustomerCheck(Customer Jim);
 	virtual ~tellerQueue();
 };
 
