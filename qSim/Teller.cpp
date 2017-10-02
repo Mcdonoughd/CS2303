@@ -26,6 +26,9 @@ int Teller::gettotalServed(){
 void Teller::settotalServed(int serv){
 	this->totalServed = serv;
 }
+int Teller::getactiontime(){
+	return this->actiontime;
+}
 float Teller::getservTime(){
 	printf("%.2f\n",this->servTime);
 	return this->servTime;

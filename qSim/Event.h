@@ -15,17 +15,18 @@ class Event {
 private:
 
 protected:
- int actiontime;
- Event *next;
+
 
 public:
 	Event();
+	 int actiontime;
+	 Event *next;
 	void Print();
-	int getactiontime();
-	void setactiontime(int update);
+	virtual int getactiontime();
+	virtual void setactiontime(int update);
 	void SetNext(Event* aNext);
 	Event* Next();
-	~Event();
+	virtual ~Event();
 
 };
 

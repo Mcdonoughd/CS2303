@@ -7,14 +7,32 @@
 #include "eventQueue.h"
 #include <iostream>
 #include <list>
+#include <time.h>
+
 using namespace std;
+
 //qSim #customer #teller #simtime #avgservicetime <seed>
 
 //simulation time will be a linked list of seconds
 
-void custFarm(int customers,int simtime,eventQueue* Clock){
+void goThroughActions(int simtime,eventQueue* Clock){
 
-	Customer* custObjPtr = new Customer[customers];
+	for(int i =0; i<=simtime; i++){
+		//START SIMULATION!
+		if(Clock->Exists(i)){
+			//there is an event at this time!
+		}
+
+
+
+
+	}
+	if(Clock->getsize()!=0){
+	//if eventqueue is still not empty then continue until done but dont count stats
+	}
+}
+
+void custFarm(Customer* custObjPtr, int customers, int simtime,eventQueue* Clock){
 	//customerFarm is an array of customers
 	for(int i = 0; i <= customers-1; i++){
 		//initialize id for all customer
@@ -26,9 +44,8 @@ void custFarm(int customers,int simtime,eventQueue* Clock){
 	}
 }
 
-void tellerFarm(int teller,int servtime,eventQueue* Clock){
+void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
 	//Tellerfarm is an array of tellers
-	Teller* tellObjPtr = new Teller[teller];
 	for(int i = 0; i <= teller-1;i++){
 		//tellObjPtr[i].getservTime();
 		//initalize id for all tellers
@@ -48,20 +65,28 @@ int main(int argc, char* argv[]){
 	int servtime = atoi(argv[4]); //avg serve time
 	int customers = atoi(argv[1]); //number of customers
 	int teller = atoi(argv[2]); //number of tellers
+	//Declare variable to hold seconds on clock.
+	time_t seconds;
+	/*
+	Get value from system clock and
+	place in seconds variable.
+	 */
+	time(&seconds);
+	/*
+	Convert seconds to a unsigned
+	integer.
+	 */
+	srand((unsigned int) seconds);
 	if(argc>5){
 		if(atoi(argv[5]) != 0){
-				srand(atoi(argv[5]));
-			}
+			srand(atoi(argv[5]));
+		}
 	}
-
 	eventQueue *Clock;
 	Clock = new eventQueue;
-	tellerFarm(teller,servtime,Clock);
-	custFarm(customers,simtime,Clock);
-
-
-
-
-
+	Customer* custObjPtr = new Customer[customers];
+	Teller* tellObjPtr = new Teller[teller];
+	tellerFarm(tellObjPtr,teller,servtime,Clock);
+	custFarm(custObjPtr,customers,simtime,Clock);
 	return 0;
 }

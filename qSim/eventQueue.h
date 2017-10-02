@@ -7,6 +7,8 @@ private:
 public:
 	eventQueue();
 	void Print();
+	int getsize();
+	bool Exists(int time);
 	void Append(int data);
 	void Append(Event anevent);
 	void Delete(int data);

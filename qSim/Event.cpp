@@ -2,9 +2,10 @@
 #include "Event.h"
 
 Event::Event(){
-actiontime = 0;
+actiontime =0;
 next = NULL;
 }
+
 Event::~Event(){
 
 }

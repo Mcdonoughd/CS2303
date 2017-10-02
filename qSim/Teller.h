@@ -23,6 +23,7 @@ private:
 	int workingtime; // the current time at which a teller is working
 	tellerQueue tellerLine; //the line in front of a teller
 public:
+	int getactiontime();
 	tellerQueue getTellerQueue();
 	int gettotalServed();
 	float getservTime();
