@@ -4,11 +4,19 @@ Customer::Customer(){
 	ID = 0;
 	waitTime = 0;
 	arrTime = rand()/float(RAND_MAX);
+	actiontime = arrTime;
 }
 Customer::Customer(int id, int simTime){
 	ID = id;
 	waitTime = 0;
 	arrTime = simTime * rand()/float(RAND_MAX);
+	actiontime = arrTime;
+}
+bool Customer::checkid(int num){
+	if(num == this->ID){
+		return true;
+	}
+	return false;
 }
 int Customer::getid(){
 	return this->ID;
@@ -27,6 +35,7 @@ int Customer:: getArrTime(){
 }
 void Customer::setArrTime(int simTime){
 	this->arrTime = simTime * rand()/float(RAND_MAX);
+	actiontime = arrTime;
 }
 Customer::~Customer(){
 

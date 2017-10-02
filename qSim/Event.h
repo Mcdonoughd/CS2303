@@ -11,17 +11,22 @@
 //#include "Teller.h"
 //#include "Customer.h"
 using namespace std;
-
 class Event {
 private:
 
 protected:
- void action();
+ int actiontime;
+ Event *next;
 
 public:
 	Event();
-
+	void Print();
+	int getactiontime();
+	void setactiontime(int update);
+	void SetNext(Event* aNext);
+	Event* Next();
 	~Event();
+
 };
 
 #endif /* EVENT_H_ */

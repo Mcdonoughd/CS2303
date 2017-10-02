@@ -31,6 +31,9 @@ public:
 	void setWaitTime(int waitTime);
 	int getArrTime();
 	void setArrTime(int arrTime);
+	bool checkid(int num);
+
+
 };
 
 #endif /* EVENT_H_ */
