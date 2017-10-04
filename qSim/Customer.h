@@ -24,7 +24,7 @@ public:
 	Customer();
 	Customer(int ID, int simTime);
 	~Customer();
-	void Action();
+	void Action() override;
 	int getid();
 	void Print();
 	int getactiontime();

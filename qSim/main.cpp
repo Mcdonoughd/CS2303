@@ -8,6 +8,7 @@
 #include <iostream>
 #include <list>
 #include <time.h>
+#include "Stats.h"
 
 using namespace std;
 //qSim #customer #teller #simtime #avgservicetime <seed>
@@ -63,9 +64,9 @@ void custFarm(Customer* custObjPtr, int customers, int simtime,eventQueue* Clock
 		custObjPtr[i].setid(i+1);
 		//initalize random arrival times
 		custObjPtr[i].setArrTime(simtime);
-		Clock->Append(custObjPtr[i]);
 		//custObjPtr[i].Print();
 	}
+	Clock->Append(custObjPtr); //adds entire customer pool to the clock
 }
 
 void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
@@ -76,8 +77,10 @@ void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
 		tellObjPtr[i].setid(i+1);
 		//inialize random service time
 		tellObjPtr[i].setservTime(servtime);
-		Clock->Append(tellObjPtr[i]);
+
 	}
+	Clock->Append(tellObjPtr);//add the entire teller pool to the clock
+
 }
 
 int main(int argc, char* argv[]){

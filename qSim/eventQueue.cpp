@@ -89,6 +89,7 @@ void eventQueue::Print() {
 /**
  * Append a node to the linked list given data
  */
+/*
 void eventQueue::Append(int data) {
 
 	// Create a new node
@@ -114,27 +115,27 @@ void eventQueue::Append(int data) {
 		head = newNode;
 	}
 }
-void eventQueue::Append(Event node) {
+*/
+void eventQueue::Append(Event* node) {
 
 	//set node's next to 0
-	node.SetNext(NULL);
+	node->SetNext(NULL);
 
 	// Create a temp pointer
 	Event *tmp = head;
-	Event *nodePtr = &node;
+	//Event *nodePtr = &node;
 	if (tmp != NULL) {
 		// Nodes already present in the list
 		// Parse to end of list
 		while (tmp->Next() != NULL ) {
 			tmp = tmp->Next();
 		}
-
 		// Point the last node to the new node
-		tmp->SetNext(nodePtr);
+		tmp->SetNext(node);
 	}
 	else {
 		// First node in the list
-		head = nodePtr;
+		head = node;
 		//this->Print();
 	}
 }
