@@ -16,6 +16,7 @@ using namespace std;
 
 class Teller : public Event {
 private:
+
 	int ID; //A teller's ID
 	int totalServed; //Count of how many customers a teller has served
 	float servTime; //the amount of time it takes for a teller to serve a customer
@@ -23,6 +24,7 @@ private:
 	int workingtime; // the current time at which a teller is working
 	tellerQueue tellerLine; //the line in front of a teller
 public:
+	void Action() override;
 	int getactiontime();
 	tellerQueue getTellerQueue();
 	int gettotalServed();

@@ -7,30 +7,30 @@ eventQueue::eventQueue(){
 }
 int eventQueue::getsize(){
 	// Create a temp pointer
-		Event *tmp = head;
-		// No nodes
-		if ( tmp == NULL ){
-			return 0;}
+	Event *tmp = head;
+	// No nodes
+	if ( tmp == NULL ){
+		return 0;}
 
-		// Last node of the list
-		if ( tmp->Next() == NULL ) {
-			return 1;
-		}
-		else {
-			// Parse thru the nodes
-int i =0;
-			while (tmp != NULL){
-				if ( tmp->Next() == NULL ) {
-					return i+=1;
-				}
-				tmp = tmp->Next();
-				i++;
-			};
-			// Delete the current node
-			delete tmp;
-			return i;
-		}
+	// Last node of the list
+	if ( tmp->Next() == NULL ) {
+		return 1;
 	}
+	else {
+		// Parse thru the nodes
+		int i =0;
+		while (tmp != NULL){
+			if ( tmp->Next() == NULL ) {
+				return i+=1;
+			}
+			tmp = tmp->Next();
+			i++;
+		};
+		// Delete the current node
+		delete tmp;
+		return i;
+	}
+}
 bool eventQueue::Exists(int data){
 	// Create a temp pointer
 	Event *tmp = head;
@@ -89,6 +89,7 @@ void eventQueue::Print() {
 /**
  * Append a node to the linked list given data
  */
+/*
 void eventQueue::Append(int data) {
 
 	// Create a new node
@@ -114,27 +115,27 @@ void eventQueue::Append(int data) {
 		head = newNode;
 	}
 }
-void eventQueue::Append(Event node) {
+*/
+void eventQueue::Append(Event* node) {
 
 	//set node's next to 0
-	node.SetNext(NULL);
+	node->SetNext(NULL);
 
 	// Create a temp pointer
 	Event *tmp = head;
-	Event *nodePtr = &node;
+	//Event *nodePtr = &node;
 	if (tmp != NULL) {
 		// Nodes already present in the list
 		// Parse to end of list
 		while (tmp->Next() != NULL ) {
 			tmp = tmp->Next();
 		}
-
 		// Point the last node to the new node
-		tmp->SetNext(nodePtr);
+		tmp->SetNext(node);
 	}
 	else {
 		// First node in the list
-		head = nodePtr;
+		head = node;
 		//this->Print();
 	}
 }
@@ -172,6 +173,24 @@ void eventQueue::Delete(int data) {
 		delete tmp;
 	}
 }
+
+Event* eventQueue::getEvent(int i){
+	// Create a temp pointer
+	Event *tmp = head;
+	if(this->Exists(i)){
+		do {
+			if ( tmp->getactiontime() == i ) break;
+				tmp = tmp->Next();
+		} while ( tmp != NULL );
+		return tmp;
+	}
+	else {
+		// Parse thru the nodes
+		return NULL;
+	}
+}
+
+
 eventQueue::~eventQueue(){
 
 }

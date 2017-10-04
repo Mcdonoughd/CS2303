@@ -8,24 +8,50 @@
 #include <iostream>
 #include <list>
 #include <time.h>
+#include "Stats.h"
 
 using namespace std;
-
 //qSim #customer #teller #simtime #avgservicetime <seed>
+int getlargeSize(Teller* tellObjPtr, int tellers){
+
+	int largeline = 0;
+		for(int i =0; i <= tellers-1;i++){
+			if(tellObjPtr[i].getTellerQueue().getTellerLineLength()>largeline){
+				largeline= tellObjPtr[i].getTellerQueue().getTellerLineLength();
+			}
+		}
+		return largeline;
+	}
+
+Teller getSmallSize(Teller* tellObjPtr,int tellers){
+	int tinyline = getlargeSize(tellObjPtr,tellers);
+	int j;
+
+	for(int i =0; i <= tellers-1;i++){
+		if(tellObjPtr[i].getTellerQueue().getTellerLineLength()<tinyline){
+			tinyline= tellObjPtr[i].getTellerQueue().getTellerLineLength();
+			j=i;
+		}
+	}
+	return tellObjPtr[j];
+}
+
+
 
 //simulation time will be a linked list of seconds
-
-void goThroughActions(int simtime,eventQueue* Clock){
-
-	for(int i =0; i<=simtime; i++){
+void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, Teller* tellObjPtr){
+	int i =0;
+	while(i<=simtime){
 		//START SIMULATION!
 		if(Clock->Exists(i)){
 			//there is an event at this time!
+			Clock->getEvent(i)->Action();//do for all actions with similar action time
+			//Clock->Action(i);
+			Clock->Delete(i);
 		}
-
-
-
-
+		 i++;
+		//update all time members
+		//time updates
 	}
 	if(Clock->getsize()!=0){
 	//if eventqueue is still not empty then continue until done but dont count stats
@@ -39,9 +65,10 @@ void custFarm(Customer* custObjPtr, int customers, int simtime,eventQueue* Clock
 		custObjPtr[i].setid(i+1);
 		//initalize random arrival times
 		custObjPtr[i].setArrTime(simtime);
-		Clock->Append(custObjPtr[i]);
 		//custObjPtr[i].Print();
+		Clock->Append(&custObjPtr[i]); //adds entire customer pool to the clock one customer at a time
 	}
+
 }
 
 void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
@@ -50,10 +77,14 @@ void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
 		//tellObjPtr[i].getservTime();
 		//initalize id for all tellers
 		tellObjPtr[i].setid(i+1);
+
 		//inialize random service time
 		tellObjPtr[i].setservTime(servtime);
-		Clock->Append(tellObjPtr[i]);
+		Clock->Append(&tellObjPtr[i]);//add the entire teller pool to the clock one teller at a  time
+
 	}
+
+
 }
 
 int main(int argc, char* argv[]){
@@ -88,5 +119,6 @@ int main(int argc, char* argv[]){
 	Teller* tellObjPtr = new Teller[teller];
 	tellerFarm(tellObjPtr,teller,servtime,Clock);
 	custFarm(custObjPtr,customers,simtime,Clock);
+
 	return 0;
 }

@@ -10,6 +10,7 @@ Event::~Event(){
 
 }
 
+
 int Event::getactiontime(){
 	return this->actiontime;
 }

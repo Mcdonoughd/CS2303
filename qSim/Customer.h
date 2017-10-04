@@ -15,7 +15,7 @@ using namespace std;
 class Customer:public Event{
 
 private:
-	void action();
+	//void action();
 	int ID;
 	float arrTime;
 	int waitTime;
@@ -24,6 +24,7 @@ public:
 	Customer();
 	Customer(int ID, int simTime);
 	~Customer();
+	void Action() override;
 	int getid();
 	void Print();
 	int getactiontime();

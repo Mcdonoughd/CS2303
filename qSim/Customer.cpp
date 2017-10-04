@@ -1,5 +1,6 @@
 //Customer.cpp by Daniel McDonough and Surya Vadivazhagu
 #include "Customer.h"
+#include "Teller.h"
 #include <cmath>
 Customer::Customer(){
 	ID = 0;
@@ -13,7 +14,9 @@ Customer::Customer(int id, int simTime){
 	arrTime = (simTime * rand()%100)/float(RAND_MAX);
 	actiontime = arrTime;
 }
+void Customer::Action(){
 
+}
 int Customer::getactiontime(){
 	return this->actiontime;
 }
@@ -28,6 +31,7 @@ int Customer::getid(){
 }
 void Customer::setid(int ID){
 	this->ID = ID;
+	//printf("%d",ID);
 }
 int Customer::getWaitTime(){
 	return this->waitTime;

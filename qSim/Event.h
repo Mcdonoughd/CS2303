@@ -19,9 +19,10 @@ protected:
 
 public:
 	Event();
-	 int actiontime;
-	 Event *next;
+	int actiontime;
+	Event *next;
 	void Print();
+	virtual void Action() = 0 ;
 	virtual int getactiontime();
 	virtual void setactiontime(int update);
 	void SetNext(Event* aNext);
