@@ -8,6 +8,7 @@ public:
 	eventQueue();
 	void Print();
 	int getsize();
+	Event* getEvent(int i);
 	bool Exists(int time);
 	void Append(int data);
 	void Append(Event anevent);

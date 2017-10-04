@@ -9,6 +9,9 @@ next = NULL;
 Event::~Event(){
 
 }
+void Event::Action(){
+printf("Should not happen.");
+}
 
 int Event::getactiontime(){
 	return this->actiontime;

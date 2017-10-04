@@ -1,5 +1,7 @@
 //Teller.cpp written by Daniel McDonough and Surya Vadivazhagu
 #include "Teller.h"
+#include "Event.h"
+#include "tellerQueue.h"
 Teller::Teller(){
 	this->totalServed = 0;
 	this->servTime = 0;
@@ -19,7 +21,12 @@ Teller::Teller(int id, int avgServTime){
 	actiontime = workingtime;
 	new tellerQueue;
 }
+void Teller::Action(){
 
+}
+tellerQueue Teller::getTellerQueue(){
+return this->tellerLine;
+}
 int Teller::gettotalServed(){
 	return this->totalServed;
 }
