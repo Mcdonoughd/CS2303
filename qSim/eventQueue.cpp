@@ -180,14 +180,13 @@ Event* eventQueue::getEvent(int i){
 	if(this->Exists(i)){
 		do {
 			if ( tmp->getactiontime() == i ) break;
-			tmp = tmp->Next();
+				tmp = tmp->Next();
 		} while ( tmp != NULL );
 		return tmp;
 	}
-
 	else {
 		// Parse thru the nodes
-		return tmp;
+		return NULL;
 	}
 }
 

@@ -26,6 +26,7 @@ int getlargeSize(Teller* tellObjPtr, int tellers){
 Teller getSmallSize(Teller* tellObjPtr,int tellers){
 	int tinyline = getlargeSize(tellObjPtr,tellers);
 	int j;
+
 	for(int i =0; i <= tellers-1;i++){
 		if(tellObjPtr[i].getTellerQueue().getTellerLineLength()<tinyline){
 			tinyline= tellObjPtr[i].getTellerQueue().getTellerLineLength();
@@ -44,7 +45,7 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, Telle
 		//START SIMULATION!
 		if(Clock->Exists(i)){
 			//there is an event at this time!
-			Clock->getEvent(i)->Action();
+			Clock->getEvent(i)->Action();//do for all actions with similar action time
 			//Clock->Action(i);
 			Clock->Delete(i);
 		}
@@ -65,8 +66,9 @@ void custFarm(Customer* custObjPtr, int customers, int simtime,eventQueue* Clock
 		//initalize random arrival times
 		custObjPtr[i].setArrTime(simtime);
 		//custObjPtr[i].Print();
+		Clock->Append(&custObjPtr[i]); //adds entire customer pool to the clock one customer at a time
 	}
-	Clock->Append(custObjPtr); //adds entire customer pool to the clock
+
 }
 
 void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
@@ -75,11 +77,13 @@ void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
 		//tellObjPtr[i].getservTime();
 		//initalize id for all tellers
 		tellObjPtr[i].setid(i+1);
+
 		//inialize random service time
 		tellObjPtr[i].setservTime(servtime);
+		Clock->Append(&tellObjPtr[i]);//add the entire teller pool to the clock one teller at a  time
 
 	}
-	Clock->Append(tellObjPtr);//add the entire teller pool to the clock
+
 
 }
 
