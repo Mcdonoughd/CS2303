@@ -5,6 +5,7 @@
 eventQueue::eventQueue(){
 	head = NULL;
 }
+//
 int eventQueue::getsize(){
 	// Create a temp pointer
 	Event *tmp = head;

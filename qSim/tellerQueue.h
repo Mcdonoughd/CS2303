@@ -11,7 +11,7 @@
 #include <queue>
 #include "Customer.h"
 using namespace std;
-class tellerQueue{
+class tellerQueue{//
 private:
 	priority_queue <int> tellerLine; //tellerline is populated with customer ID
 	//write function to search through customers and check ID's in Customer.cpp

@@ -31,7 +31,7 @@ int Customer::getid(){
 }
 void Customer::setid(int ID){
 	this->ID = ID;
-	//printf("%d",ID);
+	////printf("%d",ID);
 }
 int Customer::getWaitTime(){
 	return this->waitTime;

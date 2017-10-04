@@ -5,7 +5,7 @@ Event::Event(){
 actiontime =0;
 next = NULL;
 }
-
+//
 Event::~Event(){
 
 }

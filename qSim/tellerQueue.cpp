@@ -11,7 +11,7 @@ using namespace std;
 
 tellerQueue::tellerQueue(){
 	tellerLineLength = this->getTellerLineLength();
-}
+}//
 
 int tellerQueue::getTellerLineLength(){
 	this->setTellerLineLength();

@@ -39,5 +39,5 @@ public:
 	Teller(int id, int avgServTime);
 	~Teller();
 };
-
+//
 #endif /* TELLER_H_ */
