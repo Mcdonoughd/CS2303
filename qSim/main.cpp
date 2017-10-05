@@ -14,12 +14,23 @@
 using namespace std;
 //qSim #customer #teller #simtime #avgservicetime <seed>
 
+/** TellersShareQ is needed to run the first type of simulation, where tellers share 1 queue.
+ *@param tellObjptr2 pointer to the teller
+ *@param tellers the number of tellers that exist.
+ *@return tellers sharing a queue. no direct return.
+ */
 void TellersShareQ(Teller* tellObjptr2,int tellers){
 	tellerQueue* p = tellObjptr2[0].tellerLine;
 	for(int i=1;i<=tellers-1;i++){
 		tellObjptr2[i].tellerLine = p;
 	}
 }
+/** updateTotalWaits updates the waiting times of all events including customers and tellers.
+ * @param custObjPtr points to the customer
+ * @param customers integer representing the # of customers.
+ * @param stats instance of the statistics class that holds the outputting statistics for the simulation.
+ * @return void, but the wait times are updated.
+ */
 void updateTotalWaits(Customer* custObjPtr,int customers,Stats* stats){
 	double waittimesqr=0;
 	for(int i=0;i<=customers-1;i++){
@@ -30,6 +41,12 @@ void updateTotalWaits(Customer* custObjPtr,int customers,Stats* stats){
 	stats->avgWaitingTime= stats->totalWaitingTime/customers;
 	stats->StDivWaitingTime=(waittimesqr-(stats->avgWaitingTime*stats->avgWaitingTime));
 }
+/** updateWait updates the wait times of customers as they go through the queue.
+ * @param id is the customer's given id
+ * @param custObjPtr is a pointer to the customer themselves.
+ * @param stats instance of the statistics class that holds the outputting statistics for the simulation.
+ * @return void, but the wait times are updated.
+ */
 void updateWait(int id,Customer* custObjPtr,int customers,Stats* stats){
 	int maxWait=0;
 	for(int i=0;i<=customers-1;i++){
@@ -43,7 +60,17 @@ void updateWait(int id,Customer* custObjPtr,int customers,Stats* stats){
 	}
 	stats->maxWaitTime=maxWait;
 }
-//simulation time will be a linked list of seconds
+/** goThroughActions iterates through the different actions in the event queue.
+ * @param simtime the simulation time
+ * @param Clock the event queue's clock that keeps track of the time.
+ * @param custObjPtr points to a customer.
+ * @param customer is an integer representing the number of customers.
+ * @param tellObjPtr points to a teller.
+ * @param tellers is the number of tellers.
+ * @param seed is the optionally inputted seed
+ * @param stats is the  instance of the statistics class that holds the outputting statistics for the simulation.
+ * @return void, but things in the queue are updated.
+ */
 void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int customer,Teller* tellObjPtr,int tellers,int seed,Stats* stats){
 	int customers_served = 0;
 	int lowest_id = 10000000;
@@ -88,6 +115,12 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 	}
 	//print last stat of total time required to serve all cust
 }
+/** custFarm is the customer farm that generates the customers.
+ * @param custObjPtr points to a customer
+ * @param customers is an int representing the number of customers.
+ * @param simtime is the simulation time.
+ * @param Clock is the eventQueue that keeps track of events.
+ */
 
 void custFarm(Customer* custObjPtr, int customers, int simtime,eventQueue* Clock){
 	//customerFarm is an array of customers
@@ -101,6 +134,12 @@ void custFarm(Customer* custObjPtr, int customers, int simtime,eventQueue* Clock
 	}
 }
 
+/** tellerFarm creates the tellers for the program.
+ * @param tellObjPtr is a pointer to the teller.
+ * @param int teller is an integer representing the number of tellers.
+ * @param servtime is the randomized service time.
+ * @param Clock is the clock that keeps track of time in the event queue.
+ */
 void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
 	//Tellerfarm is an array of tellers
 	for(int i = 0; i <= teller-1;i++){
@@ -112,7 +151,11 @@ void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
 		Clock->Append(&tellObjPtr[i]);//add the entire teller pool to the clock one teller at a  time
 	}
 }
-
+/** main function that runs all the functions in the program to generate the simulation
+ * @param argc the number of arguments
+ * @param argv is the array holding the input statements.
+ * @return 1 or 0 if program runs successfully.
+ */
 int main(int argc, char* argv[]){
 	if(argc < 4){
 		cout << "Please Initialize Proper Arguments!"<< endl;

@@ -158,6 +158,8 @@ void eventQueue::Append(Event* node) {
 
 /**
  * Delete a node from the list
+ * @param data Is the action time of customers
+ * @return nothing as it deletes that node.
  */
 void eventQueue::Delete(int data) {
 
@@ -190,6 +192,10 @@ void eventQueue::Delete(int data) {
 	}
 }
 
+/** Gets an event
+ * @param actiontime is the time that an event takes to start and finish.
+ * @return the event itself
+ */
 Event* eventQueue::getEvent(int actiontime){
 	// Create a temp pointer
 	Event *tmp = head;
