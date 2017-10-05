@@ -9,7 +9,7 @@
 #include <list>
 #include <time.h>
 #include "Stats.h"
-
+#include <typeinfo>
 using namespace std;
 //qSim #customer #teller #simtime #avgservicetime <seed>
 int getlargeSize(Teller* tellObjPtr, int tellers){
@@ -42,18 +42,21 @@ Teller getSmallSize(Teller* tellObjPtr,int tellers){
 void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, Teller* tellObjPtr){
 	int i =0;
 	while(i<=simtime){
+		printf("Time == %d\n",i);
 		//START SIMULATION!
-		if(Clock->Exists(i)){
+		if(Clock->Exists(i)>0){
+			printf("HI! I Exist!\n");
 			int eventcount = 0;
 			while(eventcount<Clock->Exists(i)){
 				//there is an event at this time!
-				Clock->getEvent(i)->Action();//do for all actions with similar action time
+				Clock->getEvent(i)->Action(tellObjPtr);//do for all actions with similar action time
 				//Clock->Action(i);
 				Clock->Delete(i);
 				eventcount++;
 			}
 		}
 		i++;
+
 		//update all time members
 		//time updates
 	}
@@ -121,8 +124,10 @@ int main(int argc, char* argv[]){
 	Clock = new eventQueue;
 	Customer* custObjPtr = new Customer[customers];
 	Teller* tellObjPtr = new Teller[teller];
-	tellerFarm(tellObjPtr,teller,servtime,Clock);
 	custFarm(custObjPtr,customers,simtime,Clock);
+	tellerFarm(tellObjPtr,teller,servtime,Clock);
+
+	goThroughActions(simtime,Clock,custObjPtr, tellObjPtr);
 	//
 	return 0;
 }

@@ -34,7 +34,7 @@ int eventQueue::getsize(){
 }
 int eventQueue::Exists(int data){
 	// Create a temp pointer
-	Event *tmp = head;
+	Event *tmp = this->head;
 	// No nodes
 	int i = 0;
 	if ( tmp == NULL ){
@@ -44,23 +44,22 @@ int eventQueue::Exists(int data){
 	if(tmp->getactiontime() == data){
 		i++;
 	}
-	if ( tmp->Next() == NULL ) {
-		delete tmp;
+	if ( tmp->next == NULL ) {
+		//delete tmp;
 		return i;
 	}
 	else {
 		// Parse thru the nodes
-
 		while (tmp != NULL){
 			if ( tmp->getactiontime() == data ) {i++;}
-			if ( tmp->Next() == NULL ) {
-				delete tmp;
+			if ( tmp->next == NULL ) {
+				//delete tmp;
 				return i;
 			}
-			tmp = tmp->Next();
+			tmp = tmp->next;
 		};
 		// Delete the current node
-		delete tmp;
+		//delete tmp;
 		return i;
 	}
 }
@@ -161,7 +160,7 @@ void eventQueue::Delete(int data) {
 
 	// Last node of the list
 	if ( tmp->Next() == NULL ) {
-		delete tmp;
+		//delete tmp;
 		head = NULL;
 	}
 	else {
@@ -177,7 +176,7 @@ void eventQueue::Delete(int data) {
 		prev->SetNext(tmp->Next());
 
 		// Delete the current node
-		delete tmp;
+		//delete tmp;
 	}
 }
 

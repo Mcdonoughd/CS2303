@@ -14,8 +14,8 @@ Customer::Customer(int id, int simTime){
 	arrTime = (simTime * rand()%100)/float(RAND_MAX);
 	actiontime = arrTime;
 }
-void Customer::Action(){
-
+void Customer::Action(Teller* tellerobjptr){
+	printf("HI IM A CUSTOMER!\n");
 }
 int Customer::getactiontime(){
 	return this->actiontime;

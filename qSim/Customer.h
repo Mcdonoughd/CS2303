@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include "Event.h"
+class Teller;
 using namespace std;
 
 class Customer:public Event{
@@ -24,7 +25,8 @@ public:
 	Customer();
 	Customer(int ID, int simTime);
 	~Customer();
-	void Action() override;
+	void Action(Teller* tellerobjptr) override;
+	void addCustomer(Teller* tellerobjptr);
 	int getid();
 	void Print();
 	int getactiontime();

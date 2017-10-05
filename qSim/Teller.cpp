@@ -21,8 +21,9 @@ Teller::Teller(int id, int avgServTime){
 	actiontime = workingtime;
 	new tellerQueue;
 }
-void Teller::Action(){
-
+void Teller::Action(Teller* tellerobjptr){
+	printf("HI IM A TELLER!\n");
+	printf("%d\n",tellerobjptr[0].actiontime);
 }
 tellerQueue Teller::getTellerQueue(){
 return this->tellerLine;
@@ -57,5 +58,5 @@ void Teller::setid(int id){
 	this->ID = id;
 }
 Teller::~Teller(){
-
+//this->tellerLine.~tellerQueue();
 }

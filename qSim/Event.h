@@ -8,6 +8,7 @@
 #define EVENT_H_
 #include <iostream>
 #include <string>
+class Teller;
 //#include "Teller.h"
 //#include "Customer.h"
 using namespace std;
@@ -22,7 +23,7 @@ public:
 	int actiontime;
 	Event *next;
 	void Print();
-	virtual void Action() = 0 ;
+	virtual void Action(Teller* tellerobjptr) = 0 ;
 	virtual int getactiontime();
 	virtual void setactiontime(int update);
 	void SetNext(Event* aNext);
