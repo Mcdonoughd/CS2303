@@ -16,7 +16,7 @@ private://
 
 
 public:
-	Stats(){};
+	Stats();
 	string QueueType = "";
 	int totalWaitingTime = 0;//done
 	int totalServiceTime = 0;//done
@@ -25,9 +25,10 @@ public:
 	int avgWaitingTime = 0;
 	int StDivWaitingTime = 0;
 	int totalIdleTime = 0;//done
+	int timeReq =0;
 	int maxWaitTime = 0;//done
-	void Print_Stats();
-	~Stats(){};
+	void Print_Stats();//prints all stats except time Required!
+	~Stats();
 
 };
 

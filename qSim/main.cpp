@@ -12,7 +12,6 @@
 #include "Stats.h"
 #include <typeinfo>
 using namespace std;
-//qSim #customer #teller #simtime #avgservicetime <seed>
 
 /** TellersShareQ is needed to run the first type of simulation, where tellers share 1 queue.
  *@param tellObjptr2 pointer to the teller
@@ -39,7 +38,7 @@ void updateTotalWaits(Customer* custObjPtr,int customers,Stats* stats){
 	}
 
 	stats->avgWaitingTime= stats->totalWaitingTime/customers;
-	stats->StDivWaitingTime=(waittimesqr-(stats->avgWaitingTime*stats->avgWaitingTime));
+	stats->StDivWaitingTime=sqrt(waittimesqr-(stats->avgWaitingTime*stats->avgWaitingTime));
 }
 /** updateWait updates the wait times of customers as they go through the queue.
  * @param id is the customer's given id
@@ -75,11 +74,12 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 	int customers_served = 0;
 	int lowest_id = 10000000;
 	int currTime = 0;
+	int numEvents = Clock->Exists(currTime);
 	while(currTime<=simtime){//have o keep track of customers
 		printf("Time == %d\n",currTime);
 		printf("%d Events at this time.\n",Clock->Exists(currTime));
 		//START SIMULATION!
-		int numEvents = Clock->Exists(currTime);
+
 		if(numEvents>0){
 			int eventcount = 0;
 			for(;eventcount<numEvents;eventcount++){
@@ -109,9 +109,45 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 		}
 	}
 	updateTotalWaits(custObjPtr, customer, stats);
-	//print all stats
-	if(customers_served == customer){//if eventqueue is still not empty then continue until done but dont count stats (you can still count stats just dont print them ;)
+	stats->Print_Stats();
+	if(customers_served < customer){//if eventqueue is still not empty then continue until done but dont count stats (you can still count stats just dont print them ;)
+		while(customers_served < customer){
+			if(numEvents>0){
+				int eventcount = 0;
+				for(;eventcount<numEvents;eventcount++){
+					//there is an event at this time!
+					Clock->getEvent(currTime)->Action(tellObjPtr,tellers,currTime,simtime,seed,stats);//do for all actions with similar action time
+					for(int j =0; j <= tellers-1; j++){
+						int Maxlinesize = tellObjPtr[j].getTellerQueue()->tellerLine.size();
+						for(int linesize = 0;linesize<=Maxlinesize;linesize++){
+							//updateWait(tellObjPtr[j].getTellerQueue()->getCustomerid(linesize), custObjPtr,customer,stats);
+							if(lowest_id>tellObjPtr[j].getTellerQueue()->getCustomerid(linesize)){
+								lowest_id=tellObjPtr[j].getTellerQueue()->getCustomerid(linesize);
+							}
+						}
+					}
+					//Clock->Action(i);
+					//Clock->Delete(currTime);
+				}
+			}
+			currTime++;//time updates
+			//update time for all customers waiting in line (FOR THE STATS!)
 
+			for(int j =0; j <= tellers-1; j++){
+				int Maxlinesize = tellObjPtr[j].getTellerQueue()->tellerLine.size();
+				for(int linesize = 0;linesize<=Maxlinesize;linesize++){
+					//updateWait(tellObjPtr[j].getTellerQueue()->getCustomerid(linesize), custObjPtr,customer,stats);
+					if(lowest_id>tellObjPtr[j].getTellerQueue()->getCustomerid(linesize)){
+						lowest_id=tellObjPtr[j].getTellerQueue()->getCustomerid(linesize);
+					}
+				}
+			}
+			customers_served = lowest_id-1;
+			if(customers_served == customer){
+				stats->timeReq=currTime;
+				break;
+			}
+		}
 	}
 	//print last stat of total time required to serve all cust
 }
@@ -185,20 +221,26 @@ int main(int argc, char* argv[]){
 			seed = atoi(argv[5]);
 		}
 	}
-	//1st GO seperate tellerQ's
+	//ROUND ONE - FIGHT!!!
 	eventQueue *Clock;
 	Stats *stats;
 	stats = new Stats;
+	stats->QueueType="Short Teller Line";
+	stats->totalTellers=teller;
 	Clock = new eventQueue;
 	Customer* custObjPtr = new Customer[customers];
 	Teller* tellObjPtr = new Teller[teller];
 	custFarm(custObjPtr,customers,simtime,Clock);
 	tellerFarm(tellObjPtr,teller,servtime,Clock);
 	goThroughActions(simtime,Clock,custObjPtr,customers,tellObjPtr,teller,seed,stats);
-	//print
+	cout<<"Time Needed to Serve Everyone:   "<<stats->timeReq<<endl;
+
+	//Round TWO - FIGHT!!!
 	eventQueue *Clock2;
 	Stats *stats2;
 	stats2 = new Stats;
+	stats2->QueueType="Common Line";
+	stats2->totalTellers=teller;
 	Clock2 = new eventQueue;
 	Customer* custObjPtr2 = new Customer[customers];
 	Teller* tellObjPtr2 = new Teller[teller];
@@ -206,5 +248,6 @@ int main(int argc, char* argv[]){
 	custFarm(custObjPtr2,customers,simtime,Clock2);
 	tellerFarm(tellObjPtr2,teller,servtime,Clock2);
 	goThroughActions(simtime,Clock2,custObjPtr2,customers,tellObjPtr2,teller,seed,stats2);
+	cout<<"Time Needed to Serve Everyone:   "<<stats->timeReq<<endl;
 	return 0;
 }
