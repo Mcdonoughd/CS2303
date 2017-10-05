@@ -10,6 +10,7 @@
 #include <queue>
 using namespace std;
 
+// The functions contained within this class are all getters and setters.
 tellerQueue::tellerQueue(){
 	tellerLineLength = this->getTellerLineLength();
 	deque <int> tellerLine;
