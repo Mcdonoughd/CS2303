@@ -45,7 +45,9 @@ void updateWait(int id,Customer* custObjPtr,int customers,Stats* stats){
 }
 //simulation time will be a linked list of seconds
 void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int customer,Teller* tellObjPtr,int tellers,int seed,Stats* stats){
-	int currTime =0;
+	int customers_served = 0;
+	int lowest_id = 10000000;
+	int currTime = 0;
 	while(currTime<=simtime){//have o keep track of customers
 		printf("Time == %d\n",currTime);
 		printf("%d Events at this time.\n",Clock->Exists(currTime));
@@ -56,24 +58,33 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 			for(;eventcount<numEvents;eventcount++){
 				//there is an event at this time!
 				Clock->getEvent(currTime)->Action(tellObjPtr,tellers,currTime,simtime,seed,stats);//do for all actions with similar action time
+
 				//Clock->Action(i);
 				//Clock->Delete(currTime);
 			}
 		}
 		currTime++;//time updates
 		//update time for all customers waiting in line (FOR THE STATS!)
+
 		for(int j =0; j <= tellers-1; j++){
 			int Maxlinesize = tellObjPtr[j].getTellerQueue()->tellerLine.size();
+			stats->maxWaitTime=Maxlinesize;
 			for(int linesize = 0;linesize<=Maxlinesize;linesize++){
-				updateWait(tellObjPtr[j].getTellerQueue()->getCustomerid(j), custObjPtr,customer,stats);
+				updateWait(tellObjPtr[j].getTellerQueue()->getCustomerid(linesize), custObjPtr,customer,stats);
+				if(lowest_id>tellObjPtr[j].getTellerQueue()->getCustomerid(linesize)){
+					lowest_id=tellObjPtr[j].getTellerQueue()->getCustomerid(linesize);
+				}
 			}
 		}
+		customers_served = lowest_id-1;
+		if(customers_served == customer){
+			break;
+		}
 	}
-	//print all stats
 	updateTotalWaits(custObjPtr, customer, stats);
+	//print all stats
+	if(customers_served == customer){//if eventqueue is still not empty then continue until done but dont count stats (you can still count stats just dont print them ;)
 
-	if(Clock->getsize()!=0){//if eventqueue is still not empty then continue until done but dont count stats (you can still count stats just dont print them ;)
-		//print last stat of total time required to serve all cust
 	}
 	//print last stat of total time required to serve all cust
 }
@@ -88,7 +99,6 @@ void custFarm(Customer* custObjPtr, int customers, int simtime,eventQueue* Clock
 		//custObjPtr[i].Print();
 		Clock->Append(&custObjPtr[i]); //adds entire customer pool to the clock one customer at a time
 	}
-
 }
 
 void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
@@ -101,8 +111,6 @@ void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
 		tellObjPtr[i].setservTime(servtime);
 		Clock->Append(&tellObjPtr[i]);//add the entire teller pool to the clock one teller at a  time
 	}
-
-
 }
 
 int main(int argc, char* argv[]){

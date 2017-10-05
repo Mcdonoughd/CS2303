@@ -16,7 +16,7 @@ private://
 
 
 public:
-	Stats();
+	Stats(){};
 	string QueueType = "";
 	int totalWaitingTime = 0;//done
 	int totalServiceTime = 0;//done
@@ -27,7 +27,7 @@ public:
 	int totalIdleTime = 0;//done
 	int maxWaitTime = 0;//done
 	void Print_Stats();
-	~Stats();
+	~Stats(){};
 
 };
 
