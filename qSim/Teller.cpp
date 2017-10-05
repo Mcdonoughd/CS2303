@@ -17,6 +17,12 @@ Teller::Teller(){
 void Teller::settellerQ(tellerQueue* t){
 	this->tellerLine = t;
 }
+/** oversimtime returns a bool depending upon whether they are over the sim time or not.
+ * @param curr int representing the current time
+ * @param sim int representing the simtime
+ * @return boolean whether they are over the sim time or not.
+ *
+ */
 bool Teller::oversimtime(int curr,int sim){
 	if((this->getservTime() + this->getidleTime()+curr )>sim){
 		return true;
@@ -29,6 +35,13 @@ bool Teller::oversimtimeidle(int curr,int sim){
 	}
 	return false;
 }
+/** LoadStatsIdle loads the current statistics when the sim is idle.
+ * @param int currTime is the current time in the simulation.
+ * @param simTime is the simulations' overall time
+ * @param stat is the instance of the statistics class that records stats for the simulation.
+ * @return void as nothing is being returned.
+ *
+ */
 void Teller::LoadStatsIdle(int currTime,int simTime,Stats* stat){
 	int LegitIdleTime;
 	if(this->oversimtimeidle(currTime,simTime)){
@@ -42,6 +55,12 @@ void Teller::LoadStatsIdle(int currTime,int simTime,Stats* stat){
 		stat->totalIdleTime+=LegitIdleTime;
 	}
 }
+/** LoadStats loads the stats for a particular time
+ * @param currTime the current time
+ * @param simTime the simulation's time
+ * @param stat the instance of statistics class that holds the stats for the event.
+ * @return void, as it updates.
+ */
 void Teller::LoadStats(int currTime,int simTime,Stats* stat){
 	int LegitServTime;
 	int LegitIdleTime;
@@ -78,6 +97,15 @@ void Teller::LoadStats(int currTime,int simTime,Stats* stat){
 				stat->totalServiceTime+=LegitServTime;
 				stat->totalIdleTime+=LegitIdleTime;
 }
+/** Action is a teller's action
+ * @param tellerobjptr is a pointer to a teller
+ * @param tellers is an int representing the # of tellers.
+ * @param currTime is the current time.
+ * @param simTime is the simulation's time.
+ * @param seed is the optionally inputted seed.
+ * @param stat is the statistics that keeps track of the stats for the given simulation.
+ *
+ */
 
 void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed,Stats* stat){
 	printf("Teller %d Looks into their line...\n",this->getid());
@@ -115,6 +143,7 @@ void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,in
 		LoadStatsIdle(currTime, simTime, stat);
 	}
 }
+//The following functions are all getters or setters for Tellers.
 tellerQueue* Teller::getTellerQueue(){
 	return tellerLine;
 }
