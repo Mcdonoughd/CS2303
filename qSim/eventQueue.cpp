@@ -5,7 +5,10 @@
 eventQueue::eventQueue(){
 	head = NULL;
 }
-//
+/** Gets the size of the Event Queue
+ * @return the size of the event queue as an integer
+ *
+ */
 int eventQueue::getsize(){
 	// Create a temp pointer
 	Event *tmp = head;
@@ -32,7 +35,10 @@ int eventQueue::getsize(){
 		return i;
 	}
 }
-//gets the number of Events with a given action time
+/** Returns whether something in the event queue exists or not
+ * @param data the data
+ * @return integer representing whether something exists or not
+ */
 int eventQueue::Exists(int data){
 	// Create a temp pointer
 	Event *tmp = this->head;
@@ -66,7 +72,7 @@ int eventQueue::Exists(int data){
 	return i;
 }
 /**
- * Print the contents of the list
+ * Print the contents of the queue.
  */
 void eventQueue::Print() {
 
@@ -123,6 +129,8 @@ void eventQueue::Append(int data) {
 		head = newNode;
 	}
 }
+/** Adds an event to the eventQueue
+ * @param node the Event to be added
  */
 void eventQueue::Append(Event* node) {
 
