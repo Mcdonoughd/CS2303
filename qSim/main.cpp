@@ -110,8 +110,8 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 		}
 	}
 	updateTotalWaits(custObjPtr, customer, stats);
-	//stats->Print_Stats();
-	printf("HELLO");
+	stats->Print_Stats();
+	//printf("HELLO");
 	if(customers_served < customer){//if eventqueue is still not empty then continue until done but dont count stats (you can still count stats just dont print them ;)
 		while(customers_served < customer){
 			if(numEvents>0){

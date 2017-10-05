@@ -23,7 +23,6 @@ private:
 
 public:
 	Customer();
-	bool hasbeenserved;
 	Customer(int ID, int simTime);
 	~Customer();
 	int getshortestline(Teller* tellerobjptr,int tellers);

@@ -10,14 +10,14 @@ Customer::Customer(){
 	waitTime = 0;
 	arrTime = rand()/float(RAND_MAX);
 	actiontime = arrTime;
-	hasbeenserved = false;
+
 }
 Customer::Customer(int id, int simTime){
 	ID = id;
 	waitTime = 0;
 	arrTime = (simTime * rand()%100)/float(RAND_MAX);
 	actiontime = arrTime;
-	hasbeenserved = false;
+
 }
 
 /** Calculates the shortest line out of the Teller's lines
