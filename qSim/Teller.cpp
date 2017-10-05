@@ -85,6 +85,7 @@ void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,in
 	if(!(this->getTellerQueue()->tellerLine.empty())){
 		printf("Teller %d is helping a customer...\n",this->getid());
 		this->getTellerQueue()->removeCustomer();
+		stat->totalCustomers++;
 		this->setactiontime(this->getservTime() + this->setidleTime()+currTime);
 
 
@@ -98,6 +99,7 @@ void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,in
 			if(!(tellerobjptr[i].getTellerQueue()->tellerLine.empty())){
 				printf("Teller %d is helping a customer from Teller's %d line...\n",this->getid(),tellerobjptr[i].getid());
 				tellerobjptr[i].getTellerQueue()->removeCustomer();
+				stat->totalCustomers++;
 				this->setactiontime(this->getservTime() + this->setidleTime()+currTime);
 				this->LoadStats( currTime,simTime,stat);
 				return;
@@ -110,9 +112,8 @@ void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,in
 		//if IdleTime-(SIMTIME-CURRTIME) is < 0 then:
 		//LegitIdleTime = IdleTime-(IdleTime-(SIMTIME-CURRTIME))
 		//if IdleTime-(SIMTIME-CURRTIME) == 0 then Count IdleTime in stats
+		LoadStatsIdle(currTime, simTime, stat);
 	}
-
-
 }
 tellerQueue* Teller::getTellerQueue(){
 	return tellerLine;
@@ -134,7 +135,7 @@ void Teller::setservTime(int stime){
 	this->servTime = 2*stime*rand()/float(RAND_MAX);;
 }
 int Teller::getidleTime(){
-	printf("%d\n",idleTime);
+	//printf("%d\n",idleTime);
 	return idleTime;
 }
 int Teller::setidleTime(){

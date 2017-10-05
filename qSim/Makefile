@@ -3,10 +3,10 @@
 
 CFLAGS = -g -Wall
 
-main: main.o Customer.o Event.o eventQueue.o Stats.o Teller.o tellerQueue.o docs -o qSim
+main: main.o Customer.o Event.o eventQueue.o Stats.o Teller.o tellerQueue.o docs -o qSim -lm
 
 main.o: main.cpp 
-	g++ $(FLAGS) -c main.cpp
+	g++ $(FLAGS) -c main.cpp -lm
 
 Customer.o: Customer.cpp Customer.h
 	g++ $(FlAGS) -c Customer.cpp

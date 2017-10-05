@@ -6,6 +6,7 @@
 #include "tellerQueue.h"
 #include "eventQueue.h"
 #include <iostream>
+#include <math.h>
 #include <list>
 #include <time.h>
 #include "Stats.h"
@@ -14,19 +15,33 @@ using namespace std;
 //qSim #customer #teller #simtime #avgservicetime <seed>
 
 
+void updateTotalWaits(Customer* custObjPtr,int customers,Stats* stats){
+double waittimesqr=0;
+	for(int i=0;i<=customers-1;i++){
+		waittimesqr=(custObjPtr[i].getWaitTime()*custObjPtr[i].getWaitTime());
+		stats->totalWaitingTime+=custObjPtr[i].getWaitTime();
+	}
 
+	stats->avgWaitingTime= stats->totalWaitingTime/customers;
+	stats->StDivWaitingTime=(waittimesqr-(stats->avgWaitingTime*stats->avgWaitingTime));
+}
  void updateWait(int id,Customer* custObjPtr,int customers,Stats* stats){
+	 int maxWait=0;
 for(int i=0;i<=customers-1;i++){
 	if(custObjPtr[i].checkid(id)){
 		custObjPtr[i].setWaitTime(custObjPtr[i].getWaitTime()+1);
-		//get customer stats here!
+		if(custObjPtr[i].getWaitTime()>maxWait){
+			//get customer stats here!
+			maxWait=custObjPtr[i].getWaitTime();
+		}
 	}
 }
+stats->maxWaitTime=maxWait;
 }
 //simulation time will be a linked list of seconds
 void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int customer,Teller* tellObjPtr,int tellers,int seed,Stats* stats){
 	int currTime =0;
-	while(currTime<=simtime){//have o keep track of
+	while(currTime<=simtime){//have o keep track of customers
 		printf("Time == %d\n",currTime);
 		printf("%d Events at this time.\n",Clock->Exists(currTime));
 		//START SIMULATION!
@@ -50,6 +65,8 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 		}
 	}
 	//print all stats
+	updateTotalWaits(custObjPtr, customer, stats);
+
 	if(Clock->getsize()!=0){//if eventqueue is still not empty then continue until done but dont count stats (you can still count stats just dont print them ;)
 		//print last stat of total time required to serve all cust
 	}
@@ -120,7 +137,6 @@ int main(int argc, char* argv[]){
 	Teller* tellObjPtr = new Teller[teller];
 	custFarm(custObjPtr,customers,simtime,Clock);
 	tellerFarm(tellObjPtr,teller,servtime,Clock);
-
 	goThroughActions(simtime,Clock,custObjPtr, customers,tellObjPtr,teller,seed,stats);
 	//
 	return 0;

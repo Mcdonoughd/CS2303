@@ -18,14 +18,14 @@ private://
 public:
 	Stats();
 	string QueueType = "";
-	int totalWaitingTime = 0;
-	int totalServiceTime = 0;
-	int totalCustomers = 0;
-	int totalTellers = 0;
+	int totalWaitingTime = 0;//done
+	int totalServiceTime = 0;//done
+	int totalCustomers = 0; //total customers served
+	int totalTellers = 0; //given
 	int avgWaitingTime = 0;
 	int StDivWaitingTime = 0;
-	int totalIdleTime = 0;
-	int maxWaitTime = 0;
+	int totalIdleTime = 0;//done
+	int maxWaitTime = 0;//done
 	void Print_Stats();
 	~Stats();
 
