@@ -14,9 +14,14 @@
 using namespace std;
 //qSim #customer #teller #simtime #avgservicetime <seed>
 
-
+void TellersShareQ(Teller* tellObjptr2,int tellers){
+	tellerQueue* p = tellObjptr2[0].tellerLine;
+	for(int i=1;i<=tellers-1;i++){
+		tellObjptr2[i].tellerLine = p;
+	}
+}
 void updateTotalWaits(Customer* custObjPtr,int customers,Stats* stats){
-double waittimesqr=0;
+	double waittimesqr=0;
 	for(int i=0;i<=customers-1;i++){
 		waittimesqr=(custObjPtr[i].getWaitTime()*custObjPtr[i].getWaitTime());
 		stats->totalWaitingTime+=custObjPtr[i].getWaitTime();
@@ -25,18 +30,18 @@ double waittimesqr=0;
 	stats->avgWaitingTime= stats->totalWaitingTime/customers;
 	stats->StDivWaitingTime=(waittimesqr-(stats->avgWaitingTime*stats->avgWaitingTime));
 }
- void updateWait(int id,Customer* custObjPtr,int customers,Stats* stats){
-	 int maxWait=0;
-for(int i=0;i<=customers-1;i++){
-	if(custObjPtr[i].checkid(id)){
-		custObjPtr[i].setWaitTime(custObjPtr[i].getWaitTime()+1);
-		if(custObjPtr[i].getWaitTime()>maxWait){
-			//get customer stats here!
-			maxWait=custObjPtr[i].getWaitTime();
+void updateWait(int id,Customer* custObjPtr,int customers,Stats* stats){
+	int maxWait=0;
+	for(int i=0;i<=customers-1;i++){
+		if(custObjPtr[i].checkid(id)){
+			custObjPtr[i].setWaitTime(custObjPtr[i].getWaitTime()+1);
+			if(custObjPtr[i].getWaitTime()>maxWait){
+				//get customer stats here!
+				maxWait=custObjPtr[i].getWaitTime();
+			}
 		}
 	}
-}
-stats->maxWaitTime=maxWait;
+	stats->maxWaitTime=maxWait;
 }
 //simulation time will be a linked list of seconds
 void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int customer,Teller* tellObjPtr,int tellers,int seed,Stats* stats){
@@ -129,6 +134,7 @@ int main(int argc, char* argv[]){
 			seed = atoi(argv[5]);
 		}
 	}
+	//1st GO seperate tellerQ's
 	eventQueue *Clock;
 	Stats *stats;
 	stats = new Stats;
@@ -137,7 +143,17 @@ int main(int argc, char* argv[]){
 	Teller* tellObjPtr = new Teller[teller];
 	custFarm(custObjPtr,customers,simtime,Clock);
 	tellerFarm(tellObjPtr,teller,servtime,Clock);
-	goThroughActions(simtime,Clock,custObjPtr, customers,tellObjPtr,teller,seed,stats);
-	//
+	goThroughActions(simtime,Clock,custObjPtr,customers,tellObjPtr,teller,seed,stats);
+	//print
+	eventQueue *Clock2;
+	Stats *stats2;
+	stats2 = new Stats;
+	Clock2 = new eventQueue;
+	Customer* custObjPtr2 = new Customer[customers];
+	Teller* tellObjPtr2 = new Teller[teller];
+	TellersShareQ( tellObjPtr2, teller);
+	custFarm(custObjPtr2,customers,simtime,Clock2);
+	tellerFarm(tellObjPtr2,teller,servtime,Clock2);
+	goThroughActions(simtime,Clock2,custObjPtr2,customers,tellObjPtr2,teller,seed,stats2);
 	return 0;
 }
