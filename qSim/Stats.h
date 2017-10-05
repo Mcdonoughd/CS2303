@@ -27,7 +27,7 @@ public:
 	int totalIdleTime = 0;//done
 	int timeReq =0;
 	int maxWaitTime = 0;//done
-	void Print_Stats();//prints all stats except time Required!
+	int Print_Stats();//prints all stats except time Required!
 	~Stats();
 
 };

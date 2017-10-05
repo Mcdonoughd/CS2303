@@ -72,14 +72,14 @@ void updateWait(int id,Customer* custObjPtr,int customers,Stats* stats){
  */
 void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int customer,Teller* tellObjPtr,int tellers,int seed,Stats* stats){
 	int customers_served = 0;
-	int lowest_id = 10000000;
+	int lowest_id = 0;
 	int currTime = 0;
-	int numEvents = Clock->Exists(currTime);
+	int numEvents;
 	while(currTime<=simtime){//have o keep track of customers
 		printf("Time == %d\n",currTime);
 		printf("%d Events at this time.\n",Clock->Exists(currTime));
 		//START SIMULATION!
-
+		numEvents = Clock->Exists(currTime);
 		if(numEvents>0){
 			int eventcount = 0;
 			for(;eventcount<numEvents;eventcount++){
@@ -98,18 +98,20 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 			stats->maxWaitTime=Maxlinesize;
 			for(int linesize = 0;linesize<=Maxlinesize;linesize++){
 				updateWait(tellObjPtr[j].getTellerQueue()->getCustomerid(linesize), custObjPtr,customer,stats);
-				if(lowest_id>tellObjPtr[j].getTellerQueue()->getCustomerid(linesize)){
+				if(lowest_id<tellObjPtr[j].getTellerQueue()->getCustomerid(linesize)){
 					lowest_id=tellObjPtr[j].getTellerQueue()->getCustomerid(linesize);
 				}
 			}
 		}
 		customers_served = lowest_id-1;
+		printf("%d\n",lowest_id);
 		if(customers_served == customer){
 			break;
 		}
 	}
 	updateTotalWaits(custObjPtr, customer, stats);
-	stats->Print_Stats();
+	//stats->Print_Stats();
+	printf("HELLO");
 	if(customers_served < customer){//if eventqueue is still not empty then continue until done but dont count stats (you can still count stats just dont print them ;)
 		while(customers_served < customer){
 			if(numEvents>0){
@@ -150,6 +152,7 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 		}
 	}
 	//print last stat of total time required to serve all cust
+	cout<<"Time Needed to Serve Everyone:   "<<stats->timeReq<<endl;
 }
 /** custFarm is the customer farm that generates the customers.
  * @param custObjPtr points to a customer
@@ -233,8 +236,11 @@ int main(int argc, char* argv[]){
 	custFarm(custObjPtr,customers,simtime,Clock);
 	tellerFarm(tellObjPtr,teller,servtime,Clock);
 	goThroughActions(simtime,Clock,custObjPtr,customers,tellObjPtr,teller,seed,stats);
-	cout<<"Time Needed to Serve Everyone:   "<<stats->timeReq<<endl;
 
+	delete Clock;
+	delete stats;
+	delete[] custObjPtr;
+	delete[] tellObjPtr;
 	//Round TWO - FIGHT!!!
 	eventQueue *Clock2;
 	Stats *stats2;
@@ -248,6 +254,5 @@ int main(int argc, char* argv[]){
 	custFarm(custObjPtr2,customers,simtime,Clock2);
 	tellerFarm(tellObjPtr2,teller,servtime,Clock2);
 	goThroughActions(simtime,Clock2,custObjPtr2,customers,tellObjPtr2,teller,seed,stats2);
-	cout<<"Time Needed to Serve Everyone:   "<<stats->timeReq<<endl;
 	return 0;
 }

@@ -30,7 +30,8 @@ void tellerQueue::addCustomer(int id){
 }
 
 void tellerQueue::removeCustomer(){
-		tellerLine.pop_front();
+
+	tellerLine.pop_front();
 		setTellerLineLength();
 }
 int tellerQueue::getCustomerid(int pos){
