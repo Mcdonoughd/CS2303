@@ -18,7 +18,8 @@ private:
 	int tellerLineLength;
 public:
 	tellerQueue();
-	priority_queue <int> tellerLine;
+	deque <int> tellerLine; //deque was used because std::priority queues do not allow iteration
+	int getCustomerid(int pos);
 	int getTellerLineLength();
 	void setTellerLineLength();
 	void addCustomer(int id);

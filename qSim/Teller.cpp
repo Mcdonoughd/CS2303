@@ -13,10 +13,13 @@ Teller::Teller(){
 	actiontime = workingtime;
 }
 
+void Teller::settellerQ(tellerQueue* t){
+	this->tellerLine = t;
+}
 
 void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed){
 	printf("Teller %d Looks into their line...\n",this->getid());
-	if(this->getTellerQueue()->tellerLine.size()>0){
+	if(!(this->getTellerQueue()->tellerLine.empty())){
 		printf("Teller %d is helping a customer...\n",this->getid());
 		this->getTellerQueue()->removeCustomer();
 		this->setactiontime(this->getservTime() + this->setidleTime()+currTime);
@@ -26,11 +29,12 @@ void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,in
 	else{
 		for(int i=0; i<=tellers-1;i++){
 			printf("Teller %d Looks into Teller's %d line...\n",this->getid(),tellerobjptr[i].getid());
-			if(tellerobjptr[i].getTellerQueue()->tellerLine.size()>0){
+			if(!(tellerobjptr[i].getTellerQueue()->tellerLine.empty())){
 				printf("Teller %d is helping a customer from Teller's %d line...\n",this->getid(),tellerobjptr[i].getid());
 				tellerobjptr[i].getTellerQueue()->removeCustomer();
 				this->setactiontime(this->getservTime() + this->setidleTime()+currTime);
 				//check if goes over simTime for stats
+				return;
 			}
 		}
 		printf("Teller %d couldn't find any Customers, so they went on break...\n",this->getid());

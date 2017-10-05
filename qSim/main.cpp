@@ -15,28 +15,38 @@ using namespace std;
 
 
 
-
+ void updateWait(int id,Customer* custObjPtr,int customers){
+for(int i=0;i<=customers-1;i++){
+	if(custObjPtr[i].checkid(id)){
+		custObjPtr[i].setWaitTime(custObjPtr[i].getWaitTime()+1);
+	}
+}
+}
 //simulation time will be a linked list of seconds
-void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, Teller* tellObjPtr,int tellers,int seed){
+void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int customer,Teller* tellObjPtr,int tellers,int seed){
 	int currTime =0;
 	while(currTime<=simtime){
 		printf("Time == %d\n",currTime);
 		printf("%d Events at this time.\n",Clock->Exists(currTime));
 		//START SIMULATION!
-		if(Clock->Exists(currTime)>0){
+		int numEvents = Clock->Exists(currTime);
+		if(numEvents>0){
 			int eventcount = 0;
-			for(;eventcount<Clock->Exists(currTime);eventcount++){
+			for(;eventcount<numEvents;eventcount++){
 				//there is an event at this time!
 				Clock->getEvent(currTime)->Action(tellObjPtr,tellers,currTime,simtime,seed);//do for all actions with similar action time
 				//Clock->Action(i);
 				//Clock->Delete(currTime);
-
 			}
 		}
-		currTime++;
-
-		//update all time members
-		//time updates
+		currTime++;//time updates
+		//update time for all customers waiting in line (FOR THE STATS!)
+		for(int j =0; j <= tellers-1; j++){
+			int Maxlinesize = tellObjPtr[j].getTellerQueue()->tellerLine.size();
+			for(int linesize = 0;linesize<=Maxlinesize;linesize++){
+				updateWait(tellObjPtr[j].getTellerQueue()->getCustomerid(j), custObjPtr,customer);
+			}
+		}
 	}
 	if(Clock->getsize()!=0){
 		//if eventqueue is still not empty then continue until done but dont count stats
@@ -106,7 +116,7 @@ int main(int argc, char* argv[]){
 	custFarm(custObjPtr,customers,simtime,Clock);
 	tellerFarm(tellObjPtr,teller,servtime,Clock);
 
-	goThroughActions(simtime,Clock,custObjPtr, tellObjPtr,teller,seed);
+	goThroughActions(simtime,Clock,custObjPtr, customers,tellObjPtr,teller,seed);
 	//
 	return 0;
 }

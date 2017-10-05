@@ -12,7 +12,7 @@ using namespace std;
 
 tellerQueue::tellerQueue(){
 	tellerLineLength = this->getTellerLineLength();
-	priority_queue <int> tellerLine;
+	deque <int> tellerLine;
 }//
 
 int tellerQueue::getTellerLineLength(){
@@ -25,17 +25,19 @@ void tellerQueue::setTellerLineLength(){
 }
 
 void tellerQueue::addCustomer(int id){
-	tellerLine.push(id);
+	tellerLine.push_back(id);
 }
 
 void tellerQueue::removeCustomer(){
-		tellerLine.pop();
+		tellerLine.pop_front();
 		setTellerLineLength();
 }
-
+int tellerQueue::getCustomerid(int pos){
+	return tellerLine[pos];
+}
 void tellerQueue::removeCustomerCheck(Customer* Jim){
-	if(this->tellerLine.top()==Jim->getid()){
-		this->tellerLine.pop();
+	if(this->tellerLine.front()==Jim->getid()){
+		this->tellerLine.pop_front();
 		this->setTellerLineLength();
 	}
 }

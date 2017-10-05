@@ -16,17 +16,17 @@ Customer::Customer(int id, int simTime){
 }
 
 int Customer::getshortestline(Teller* tellerobjptr,int tellers){
-	int smallestline =10000;//if you have a line over 10000 customers long you either run a really good business or a really bad one
+	unsigned int smallestline =10000;//if you have a line over 10000 customers long you either run a really good business or a really bad one
 	int teller_with_smallest_line; //keeps track of the teller's position in the array with the smallest line.
 	for(int i=0;i<=tellers-1;i++){
-		if(tellerobjptr[i].getTellerQueue()->getTellerLineLength()<smallestline){
-			smallestline = tellerobjptr[i].getTellerQueue()->getTellerLineLength();
+		if(tellerobjptr[i].getTellerQueue()->tellerLine.size()<smallestline){
+			smallestline = tellerobjptr[i].getTellerQueue()->tellerLine.size();
 			teller_with_smallest_line = i;
 		}
-		else if(tellerobjptr[i].getTellerQueue()->getTellerLineLength()==smallestline){
+		else if(tellerobjptr[i].getTellerQueue()->tellerLine.size()==smallestline){
 			int a=rand()%2; //get rand number 1 or 0
 			if(a==1){
-				smallestline = tellerobjptr[i].getTellerQueue()->getTellerLineLength();
+				smallestline = tellerobjptr[i].getTellerQueue()->tellerLine.size();
 				teller_with_smallest_line = i;
 			}
 			else{/*Keep the old line as the smallest line*/}
@@ -39,7 +39,7 @@ int Customer::getshortestline(Teller* tellerobjptr,int tellers){
 void Customer::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed){
 	printf("Customer %d has arrived!\n",this->ID);
 	int shortline = getshortestline(tellerobjptr,tellers);
-	tellerobjptr[shortline].getTellerQueue()->tellerLine.push(this->getid());
+	tellerobjptr[shortline].getTellerQueue()->tellerLine.push_back(this->getid());
 	printf("Customer %d has joined Line %d!\n",this->ID,tellerobjptr[shortline].getid());
 	cout << "Line " << tellerobjptr[shortline].getid() <<" has "<<tellerobjptr[shortline].getTellerQueue()->tellerLine.size()<<" People!\n";
 
@@ -73,7 +73,7 @@ int Customer:: getArrTime(){
 void Customer::setArrTime(int simTime){
 	this->arrTime = (simTime * rand())/float(RAND_MAX);
 	actiontime = abs(this->arrTime * 100);
-	printf("%d %.2f--> NULL\n",this->actiontime,this->arrTime);
+	//printf("%d %.2f--> NULL\n",this->actiontime,this->arrTime);
 }
 void  Customer::Print(){
 	if(this->Next()!= NULL){

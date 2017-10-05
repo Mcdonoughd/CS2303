@@ -22,11 +22,12 @@ private:
 	float servTime; //the amount of time it takes for a teller to serve a customer
 	int idleTime; // the amount of time a teller goes inactive after serving a customer
 	int workingtime; // the current time at which a teller is working
-	 //the line in front of a teller
+
 public:
 	void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed) override;
 	int getactiontime();
-	tellerQueue* tellerLine;
+	tellerQueue* tellerLine;//the line in front of a teller (made public for ease and due to time constraints
+	void settellerQ(tellerQueue* t);
 	tellerQueue* getTellerQueue();
 	int gettotalServed();
 	float getservTime();
