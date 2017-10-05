@@ -15,7 +15,7 @@ using namespace std;
 
 
 
- void updateWait(int id,Customer* custObjPtr,int customers){
+ void updateWait(int id,Customer* custObjPtr,int customers,Stats* stats){
 for(int i=0;i<=customers-1;i++){
 	if(custObjPtr[i].checkid(id)){
 		custObjPtr[i].setWaitTime(custObjPtr[i].getWaitTime()+1);
@@ -24,7 +24,7 @@ for(int i=0;i<=customers-1;i++){
 }
 }
 //simulation time will be a linked list of seconds
-void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int customer,Teller* tellObjPtr,int tellers,int seed){
+void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int customer,Teller* tellObjPtr,int tellers,int seed,Stats* stats){
 	int currTime =0;
 	while(currTime<=simtime){//have o keep track of
 		printf("Time == %d\n",currTime);
@@ -35,7 +35,7 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 			int eventcount = 0;
 			for(;eventcount<numEvents;eventcount++){
 				//there is an event at this time!
-				Clock->getEvent(currTime)->Action(tellObjPtr,tellers,currTime,simtime,seed);//do for all actions with similar action time
+				Clock->getEvent(currTime)->Action(tellObjPtr,tellers,currTime,simtime,seed,stats);//do for all actions with similar action time
 				//Clock->Action(i);
 				//Clock->Delete(currTime);
 			}
@@ -45,7 +45,7 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 		for(int j =0; j <= tellers-1; j++){
 			int Maxlinesize = tellObjPtr[j].getTellerQueue()->tellerLine.size();
 			for(int linesize = 0;linesize<=Maxlinesize;linesize++){
-				updateWait(tellObjPtr[j].getTellerQueue()->getCustomerid(j), custObjPtr,customer);
+				updateWait(tellObjPtr[j].getTellerQueue()->getCustomerid(j), custObjPtr,customer,stats);
 			}
 		}
 	}
@@ -113,13 +113,15 @@ int main(int argc, char* argv[]){
 		}
 	}
 	eventQueue *Clock;
+	Stats *stats;
+	stats = new Stats;
 	Clock = new eventQueue;
 	Customer* custObjPtr = new Customer[customers];
 	Teller* tellObjPtr = new Teller[teller];
 	custFarm(custObjPtr,customers,simtime,Clock);
 	tellerFarm(tellObjPtr,teller,servtime,Clock);
 
-	goThroughActions(simtime,Clock,custObjPtr, customers,tellObjPtr,teller,seed);
+	goThroughActions(simtime,Clock,custObjPtr, customers,tellObjPtr,teller,seed,stats);
 	//
 	return 0;
 }

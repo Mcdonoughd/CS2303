@@ -2,6 +2,7 @@
 #include "Customer.h"
 #include "Teller.h"
 #include <cmath>
+#include "Stats.h"
 Customer::Customer(){
 	ID = 0;
 	waitTime = 0;
@@ -36,7 +37,7 @@ int Customer::getshortestline(Teller* tellerobjptr,int tellers){
 }
 
 
-void Customer::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed){
+void Customer::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed,Stats* stats){
 	printf("Customer %d has arrived!\n",this->ID);
 	int shortline = getshortestline(tellerobjptr,tellers);
 	tellerobjptr[shortline].getTellerQueue()->tellerLine.push_back(this->getid());

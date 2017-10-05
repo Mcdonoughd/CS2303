@@ -26,7 +26,7 @@ public:
 	Customer(int ID, int simTime);
 	~Customer();
 	int getshortestline(Teller* tellerobjptr,int tellers);
-	void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed) override;
+	void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed,Stats* stat) override;
 	void addCustomer(Teller* tellerobjptr);
 	int getid();
 	void Print();

@@ -11,6 +11,7 @@
 class Teller;
 //#include "Teller.h"
 //#include "Customer.h"
+class Stats;
 using namespace std;
 class Event {
 private:
@@ -23,7 +24,7 @@ public:
 	int actiontime;
 	Event *next;
 	void Print();
-	virtual void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed) = 0 ;
+	virtual void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed,Stats* stat) = 0 ;
 	virtual int getactiontime();
 	virtual void setactiontime(int update);
 	void SetNext(Event* aNext);

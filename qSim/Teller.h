@@ -24,9 +24,12 @@ private:
 	int workingtime; // the current time at which a teller is working
 
 public:
-	void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed) override;
+	void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed,Stats* stat) override;
 	int getactiontime();
+	void LoadStatsIdle(int currTime,int simTime,Stats* stat);
+	void LoadStats(int currTime,int simTime,Stats* stat);
 	bool oversimtime(int curr,int sim);
+	bool oversimtimeidle(int curr,int sim);
 	tellerQueue* tellerLine;//the line in front of a teller (made public for ease and due to time constraints
 	void settellerQ(tellerQueue* t);
 	tellerQueue* getTellerQueue();

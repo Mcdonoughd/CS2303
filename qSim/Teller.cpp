@@ -2,6 +2,7 @@
 #include "Teller.h"
 #include "Event.h"
 #include <cstdlib>
+#include "Stats.h"
 #include "tellerQueue.h"
 Teller::Teller(){
 	tellerLine = new tellerQueue;
@@ -22,22 +23,72 @@ bool Teller::oversimtime(int curr,int sim){
 	}
 	return false;
 }
-void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed){
+bool Teller::oversimtimeidle(int curr,int sim){
+	if((this->getidleTime()+curr )>sim){
+		return true;
+	}
+	return false;
+}
+void Teller::LoadStatsIdle(int currTime,int simTime,Stats* stat){
+	int LegitIdleTime;
+	if(this->oversimtimeidle(currTime,simTime)){
+		if (this->getidleTime()-(simTime-currTime) < 0){
+							LegitIdleTime = this->getidleTime()-(this->getidleTime()-(simTime-currTime));
+						}
+						else{
+							//then Count ServTime in stats
+							LegitIdleTime = this->getidleTime();
+						}
+		stat->totalIdleTime+=LegitIdleTime;
+	}
+}
+void Teller::LoadStats(int currTime,int simTime,Stats* stat){
+	int LegitServTime;
+	int LegitIdleTime;
+	if(this->oversimtime(currTime,simTime)){
+				//add to stats:
+
+				if (this->getservTime()-(simTime-currTime) < 0){
+					LegitServTime = this->getservTime()-(this->getservTime()-(simTime-currTime));
+				}
+				else if (this->getservTime()-(simTime-currTime) == 0){
+					//then Count ServTime in stats
+					LegitServTime = this->getservTime();
+				}
+				else{
+					if(this->getservTime()-(simTime-currTime) > 0){
+						if(this->getidleTime()-(this->getservTime()-(simTime-currTime)) < 0){
+							LegitIdleTime = (this->getidleTime() - (this->getidleTime()-(this->getservTime()-(simTime-currTime))));
+							LegitServTime = this->getservTime();
+						}
+					}
+					else {
+						LegitIdleTime =this->getidleTime();
+						LegitServTime = this->getservTime();
+					}
+
+				}
+				//if ServTime-(SIMTIME-CURRTIME) > 0 then:
+				//if IdleTime-(ServTime-(SIMTIME-CURRTIME)) < 0 then
+				//LegitIdletime = IdleTime - (IdleTime-(ServTime-(SIMTIME-CURRTIME)); LegitServeTime = ServeTime
+				//if IdleTime-(ServTime-(SIMTIME-CURRTIME)) == 0 then Both are legit.(should never get to this case)
+
+			}
+	//add serve time and idle time to stats
+				stat->totalServiceTime+=LegitServTime;
+				stat->totalIdleTime+=LegitIdleTime;
+}
+
+void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed,Stats* stat){
 	printf("Teller %d Looks into their line...\n",this->getid());
+
 	if(!(this->getTellerQueue()->tellerLine.empty())){
 		printf("Teller %d is helping a customer...\n",this->getid());
 		this->getTellerQueue()->removeCustomer();
 		this->setactiontime(this->getservTime() + this->setidleTime()+currTime);
-		if(this->oversimtime(currTime,simTime)){
-			//add to stats:
-			//if ServTime-(SIMTIME-CURRTIME) is < 0 then:
-			//LegitServTime = ServeTime-(ServTime-(SIMTIME-CURRTIME))
-			//if ServTime-(SIMTIME-CURRTIME) == 0 then Count ServTime in stats
-			//if ServTime-(SIMTIME-CURRTIME) > 0 then:
-				//if IdleTime-(ServTime-(SIMTIME-CURRTIME)) < 0 then
-				//LegitIdletime = IdleTime - (IdleTime-(ServTime-(SIMTIME-CURRTIME)); LegitServeTime = ServeTime
-				//if IdleTime-(ServTime-(SIMTIME-CURRTIME)) == 0 then Both are legit.(should never get to this case)
-		}
+
+
+		this->LoadStats( currTime,simTime,stat);
 		//check if goes over simTime for stats
 		return;
 	}
@@ -48,26 +99,17 @@ void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,in
 				printf("Teller %d is helping a customer from Teller's %d line...\n",this->getid(),tellerobjptr[i].getid());
 				tellerobjptr[i].getTellerQueue()->removeCustomer();
 				this->setactiontime(this->getservTime() + this->setidleTime()+currTime);
-				if(this->oversimtime(currTime,simTime)){
-							//add to stats:
-							//if ServTime-(SIMTIME-CURRTIME) is < 0 then:
-							//LegitServTime = ServeTime-(ServTime-(SIMTIME-CURRTIME))
-							//if ServTime-(SIMTIME-CURRTIME) == 0 then Count ServTime in stats
-							//if ServTime-(SIMTIME-CURRTIME) > 0 then:
-								//if IdleTime-(ServTime-(SIMTIME-CURRTIME)) < 0 then
-								//LegitIdletime = IdleTime - (IdleTime-(ServTime-(SIMTIME-CURRTIME)); LegitServeTime = ServeTime
-								//if IdleTime-(ServTime-(SIMTIME-CURRTIME)) == 0 then Both are legit.(should never get to this case)
-						}//check if goes over simTime for stats
+				this->LoadStats( currTime,simTime,stat);
 				return;
 			}
 		}
 		printf("Teller %d couldn't find any Customers, so they went on break...\n",this->getid());
 		this->setactiontime(this->setidleTime()+currTime);
 		//check if goes over simTime for stats (not similar to for loop above because this only counts idleTime
-					//add to stats:
-					//if IdleTime-(SIMTIME-CURRTIME) is < 0 then:
-					//LegitIdleTime = IdleTime-(IdleTime-(SIMTIME-CURRTIME))
-					//if IdleTime-(SIMTIME-CURRTIME) == 0 then Count IdleTime in stats
+		//add to stats:
+		//if IdleTime-(SIMTIME-CURRTIME) is < 0 then:
+		//LegitIdleTime = IdleTime-(IdleTime-(SIMTIME-CURRTIME))
+		//if IdleTime-(SIMTIME-CURRTIME) == 0 then Count IdleTime in stats
 	}
 
 
