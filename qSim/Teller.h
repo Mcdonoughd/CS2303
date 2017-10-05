@@ -26,6 +26,7 @@ private:
 public:
 	void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed) override;
 	int getactiontime();
+	bool oversimtime(int curr,int sim);
 	tellerQueue* tellerLine;//the line in front of a teller (made public for ease and due to time constraints
 	void settellerQ(tellerQueue* t);
 	tellerQueue* getTellerQueue();

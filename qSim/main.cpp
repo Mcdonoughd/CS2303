@@ -19,13 +19,14 @@ using namespace std;
 for(int i=0;i<=customers-1;i++){
 	if(custObjPtr[i].checkid(id)){
 		custObjPtr[i].setWaitTime(custObjPtr[i].getWaitTime()+1);
+		//get customer stats here!
 	}
 }
 }
 //simulation time will be a linked list of seconds
 void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int customer,Teller* tellObjPtr,int tellers,int seed){
 	int currTime =0;
-	while(currTime<=simtime){
+	while(currTime<=simtime){//have o keep track of
 		printf("Time == %d\n",currTime);
 		printf("%d Events at this time.\n",Clock->Exists(currTime));
 		//START SIMULATION!
@@ -48,9 +49,11 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 			}
 		}
 	}
-	if(Clock->getsize()!=0){
-		//if eventqueue is still not empty then continue until done but dont count stats
+	//print all stats
+	if(Clock->getsize()!=0){//if eventqueue is still not empty then continue until done but dont count stats (you can still count stats just dont print them ;)
+		//print last stat of total time required to serve all cust
 	}
+	//print last stat of total time required to serve all cust
 }
 
 void custFarm(Customer* custObjPtr, int customers, int simtime,eventQueue* Clock){
