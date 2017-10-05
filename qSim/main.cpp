@@ -15,13 +15,13 @@ using namespace std;
 int getlargeSize(Teller* tellObjPtr, int tellers){
 
 	int largeline = 0;
-		for(int i =0; i <= tellers-1;i++){
-			if(tellObjPtr[i].getTellerQueue().getTellerLineLength()>largeline){
-				largeline= tellObjPtr[i].getTellerQueue().getTellerLineLength();
-			}
+	for(int i =0; i <= tellers-1;i++){
+		if(tellObjPtr[i].getTellerQueue().getTellerLineLength()>largeline){
+			largeline= tellObjPtr[i].getTellerQueue().getTellerLineLength();
 		}
-		return largeline;
 	}
+	return largeline;
+}
 
 Teller getSmallSize(Teller* tellObjPtr,int tellers){
 	int tinyline = getlargeSize(tellObjPtr,tellers);
@@ -44,17 +44,21 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, Telle
 	while(i<=simtime){
 		//START SIMULATION!
 		if(Clock->Exists(i)){
-			//there is an event at this time!
-			Clock->getEvent(i)->Action();//do for all actions with similar action time
-			//Clock->Action(i);
-			Clock->Delete(i);
+			int eventcount = 0;
+			while(eventcount<Clock->Exists(i)){
+				//there is an event at this time!
+				Clock->getEvent(i)->Action();//do for all actions with similar action time
+				//Clock->Action(i);
+				Clock->Delete(i);
+				eventcount++;
+			}
 		}
-		 i++;
+		i++;
 		//update all time members
 		//time updates
 	}
 	if(Clock->getsize()!=0){
-	//if eventqueue is still not empty then continue until done but dont count stats
+		//if eventqueue is still not empty then continue until done but dont count stats
 	}
 }
 
@@ -119,6 +123,6 @@ int main(int argc, char* argv[]){
 	Teller* tellObjPtr = new Teller[teller];
 	tellerFarm(tellObjPtr,teller,servtime,Clock);
 	custFarm(custObjPtr,customers,simtime,Clock);
-//
+	//
 	return 0;
 }

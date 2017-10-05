@@ -10,7 +10,7 @@ public:
 	void Print();
 	int getsize();
 	Event* getEvent(int i);
-	bool Exists(int time);
+	int Exists(int time);
 	//void Append(int data);
 	void Append(Event* anevent);
 	void Delete(int data);

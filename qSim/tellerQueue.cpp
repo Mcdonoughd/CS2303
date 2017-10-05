@@ -22,16 +22,16 @@ void tellerQueue::setTellerLineLength(){
 	this->tellerLineLength = this->tellerLine.size();
 }
 
-void tellerQueue::addCustomer(Customer Jim){
-	this->tellerLine.push(Jim.getid());
+void tellerQueue::addCustomer(Customer* Jim){
+	this->tellerLine.push(Jim->getid());
 }
 
 void tellerQueue::removeCustomer(){
 		this->tellerLine.pop();
 }
 
-void tellerQueue::removeCustomerCheck(Customer Jim){
-	if(this->tellerLine.top()==Jim.getid()){
+void tellerQueue::removeCustomerCheck(Customer* Jim){
+	if(this->tellerLine.top()==Jim->getid()){
 		this->tellerLine.pop();
 	}
 }

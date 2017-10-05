@@ -20,9 +20,9 @@ public:
 	tellerQueue();
 	int getTellerLineLength();
 	void setTellerLineLength();
-	void addCustomer(Customer Jim);
+	void addCustomer(Customer* Jim);
 	void removeCustomer();
-	void removeCustomerCheck(Customer Jim);
+	void removeCustomerCheck(Customer* Jim);
 	virtual ~tellerQueue();
 };
 

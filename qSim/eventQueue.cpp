@@ -32,30 +32,36 @@ int eventQueue::getsize(){
 		return i;
 	}
 }
-bool eventQueue::Exists(int data){
+int eventQueue::Exists(int data){
 	// Create a temp pointer
 	Event *tmp = head;
 	// No nodes
+	int i = 0;
 	if ( tmp == NULL ){
-		return false;}
+		return i;}
 
-	// Last node of the list
+	// Last node of the list if only two nodes
+	if(tmp->getactiontime() == data){
+		i++;
+	}
 	if ( tmp->Next() == NULL ) {
-		return false;
+		delete tmp;
+		return i;
 	}
 	else {
 		// Parse thru the nodes
 
 		while (tmp != NULL){
-			if ( tmp->getactiontime() == data ) {break;}
+			if ( tmp->getactiontime() == data ) {i++;}
 			if ( tmp->Next() == NULL ) {
-				return false;
+				delete tmp;
+				return i;
 			}
 			tmp = tmp->Next();
 		};
 		// Delete the current node
 		delete tmp;
-		return true;
+		return i;
 	}
 }
 /**
@@ -116,7 +122,7 @@ void eventQueue::Append(int data) {
 		head = newNode;
 	}
 }
-*/
+ */
 void eventQueue::Append(Event* node) {
 
 	//set node's next to 0
@@ -181,7 +187,7 @@ Event* eventQueue::getEvent(int i){
 	if(this->Exists(i)){
 		do {
 			if ( tmp->getactiontime() == i ) break;
-				tmp = tmp->Next();
+			tmp = tmp->Next();
 		} while ( tmp != NULL );
 		return tmp;
 	}
