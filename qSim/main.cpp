@@ -104,7 +104,7 @@ void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, int c
 			}
 		}
 		customers_served = lowest_id-1;
-		printf("%d\n",lowest_id);
+		//printf("%d\n",lowest_id);
 		if(customers_served == customer){
 			break;
 		}
