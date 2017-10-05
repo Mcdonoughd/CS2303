@@ -7,32 +7,38 @@
 #include "tellerQueue.h"
 #include <iostream>
 #include <string>
+#include <queue>
 using namespace std;
 
 tellerQueue::tellerQueue(){
 	tellerLineLength = this->getTellerLineLength();
+	priority_queue <int> tellerLine;
 }//
-
+priority_queue <int> tellerQueue::PriorityQ(){
+	return this->tellerLine;
+}
 int tellerQueue::getTellerLineLength(){
 	this->setTellerLineLength();
 	return this->tellerLineLength;
 }
 
 void tellerQueue::setTellerLineLength(){
-	this->tellerLineLength = this->tellerLine.size();
+	tellerLineLength = tellerLine.size();
 }
 
-void tellerQueue::addCustomer(Customer* Jim){
-	this->tellerLine.push(Jim->getid());
+void tellerQueue::addCustomer(int id){
+	tellerLine.push(id);
 }
 
 void tellerQueue::removeCustomer(){
-		this->tellerLine.pop();
+		tellerLine.pop();
+		setTellerLineLength();
 }
 
 void tellerQueue::removeCustomerCheck(Customer* Jim){
 	if(this->tellerLine.top()==Jim->getid()){
 		this->tellerLine.pop();
+		this->setTellerLineLength();
 	}
 }
 

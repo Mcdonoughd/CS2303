@@ -14,9 +14,36 @@ Customer::Customer(int id, int simTime){
 	arrTime = (simTime * rand()%100)/float(RAND_MAX);
 	actiontime = arrTime;
 }
-void Customer::Action(Teller* tellerobjptr){
-	printf("HI IM A CUSTOMER!\n");
+
+int Customer::getshortestline(Teller* tellerobjptr,int tellers){
+	unsigned int smallestline =10000;//if you have a line over 10000 customers long you either run a really good business or a really bad one
+	int teller_with_smallest_line; //keeps track of the teller's position in the array with the smallest line.
+	for(int i=0;i<=tellers-1;i++){
+		if(tellerobjptr[i].getTellerQueue().size()<smallestline){
+			smallestline = tellerobjptr[i].getTellerQueue().size();
+			teller_with_smallest_line = i;
+		}
+		else if(tellerobjptr[i].getTellerQueue().size()==smallestline){
+			int a=rand()%2; //get rand number 1 or 0
+			if(a==1){
+				smallestline = tellerobjptr[i].getTellerQueue().size();
+				teller_with_smallest_line = i;
+			}
+			else{/*Keep the old line as the smallest line*/}
+		}
+	}
+	return teller_with_smallest_line;
 }
+
+
+void Customer::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed){
+	printf("Customer %d has arrived!\n",this->ID);
+	tellerobjptr[getshortestline(tellerobjptr,tellers)].getTellerQueue().push(this->getid());
+	printf("Customer %d has joined Line %d!\n",this->ID,tellerobjptr[getshortestline(tellerobjptr,tellers)].getid());
+	cout << "Line" << tellerobjptr[getshortestline(tellerobjptr,tellers)].getid() <<" has "<<tellerobjptr[getshortestline(tellerobjptr,tellers)].getTellerQueue().size()<<" People!\n";
+
+}
+
 int Customer::getactiontime(){
 	return this->actiontime;
 }
@@ -49,7 +76,7 @@ void Customer::setArrTime(int simTime){
 }
 void  Customer::Print(){
 	if(this->Next()!= NULL){
-	printf("%d --> %d\n",this->actiontime, this->Next()->actiontime);
+		printf("%d --> %d\n",this->actiontime, this->Next()->actiontime);
 	}
 	else{
 		printf("%d %.2f--> NULL\n",this->actiontime,this->arrTime);

@@ -32,11 +32,12 @@ int eventQueue::getsize(){
 		return i;
 	}
 }
+//gets the number of Events with a given action time
 int eventQueue::Exists(int data){
 	// Create a temp pointer
 	Event *tmp = this->head;
+	int i = 0; //event counter
 	// No nodes
-	int i = 0;
 	if ( tmp == NULL ){
 		return i;}
 
@@ -44,7 +45,7 @@ int eventQueue::Exists(int data){
 	if(tmp->getactiontime() == data){
 		i++;
 	}
-	if ( tmp->next == NULL ) {
+	else if( tmp->next == NULL ) {
 		//delete tmp;
 		return i;
 	}
@@ -60,8 +61,9 @@ int eventQueue::Exists(int data){
 		};
 		// Delete the current node
 		//delete tmp;
-		return i;
+
 	}
+	return i;
 }
 /**
  * Print the contents of the list
@@ -180,20 +182,16 @@ void eventQueue::Delete(int data) {
 	}
 }
 
-Event* eventQueue::getEvent(int i){
+Event* eventQueue::getEvent(int actiontime){
 	// Create a temp pointer
 	Event *tmp = head;
-	if(this->Exists(i)){
-		do {
-			if ( tmp->getactiontime() == i ) break;
-			tmp = tmp->Next();
-		} while ( tmp != NULL );
-		return tmp;
+
+	while ( tmp != NULL ){
+		if ( tmp->getactiontime() == actiontime ) {break;}
+		tmp = tmp->next;
 	}
-	else {
-		// Parse thru the nodes
-		return NULL;
-	}
+	return tmp;
+
 }
 
 

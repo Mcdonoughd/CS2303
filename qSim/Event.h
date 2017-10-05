@@ -23,7 +23,7 @@ public:
 	int actiontime;
 	Event *next;
 	void Print();
-	virtual void Action(Teller* tellerobjptr) = 0 ;
+	virtual void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed) = 0 ;
 	virtual int getactiontime();
 	virtual void setactiontime(int update);
 	void SetNext(Event* aNext);

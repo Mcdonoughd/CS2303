@@ -12,50 +12,28 @@
 #include <typeinfo>
 using namespace std;
 //qSim #customer #teller #simtime #avgservicetime <seed>
-int getlargeSize(Teller* tellObjPtr, int tellers){
 
-	int largeline = 0;
-	for(int i =0; i <= tellers-1;i++){
-		if(tellObjPtr[i].getTellerQueue().getTellerLineLength()>largeline){
-			largeline= tellObjPtr[i].getTellerQueue().getTellerLineLength();
-		}
-	}
-	return largeline;
-}
-
-Teller getSmallSize(Teller* tellObjPtr,int tellers){
-	int tinyline = getlargeSize(tellObjPtr,tellers);
-	int j;
-
-	for(int i =0; i <= tellers-1;i++){
-		if(tellObjPtr[i].getTellerQueue().getTellerLineLength()<tinyline){
-			tinyline= tellObjPtr[i].getTellerQueue().getTellerLineLength();
-			j=i;
-		}
-	}
-	return tellObjPtr[j];
-}
 
 
 
 //simulation time will be a linked list of seconds
-void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, Teller* tellObjPtr){
-	int i =0;
-	while(i<=simtime){
-		printf("Time == %d\n",i);
+void goThroughActions(int simtime,eventQueue* Clock, Customer* custObjPtr, Teller* tellObjPtr,int tellers,int seed){
+	int currTime =0;
+	while(currTime<=simtime){
+		printf("Time == %d\n",currTime);
+		printf("%d Events at this time.\n",Clock->Exists(currTime));
 		//START SIMULATION!
-		if(Clock->Exists(i)>0){
-			printf("HI! I Exist!\n");
+		if(Clock->Exists(currTime)>0){
 			int eventcount = 0;
-			while(eventcount<Clock->Exists(i)){
+			for(;eventcount<Clock->Exists(currTime);eventcount++){
 				//there is an event at this time!
-				Clock->getEvent(i)->Action(tellObjPtr);//do for all actions with similar action time
+				Clock->getEvent(currTime)->Action(tellObjPtr,tellers,currTime,simtime,seed);//do for all actions with similar action time
 				//Clock->Action(i);
-				Clock->Delete(i);
-				eventcount++;
+				//Clock->Delete(currTime);
+
 			}
 		}
-		i++;
+		currTime++;
 
 		//update all time members
 		//time updates
@@ -84,11 +62,9 @@ void tellerFarm(Teller* tellObjPtr,int teller,int servtime,eventQueue* Clock){
 		//tellObjPtr[i].getservTime();
 		//initalize id for all tellers
 		tellObjPtr[i].setid(i+1);
-
 		//inialize random service time
 		tellObjPtr[i].setservTime(servtime);
 		Clock->Append(&tellObjPtr[i]);//add the entire teller pool to the clock one teller at a  time
-
 	}
 
 
@@ -103,6 +79,7 @@ int main(int argc, char* argv[]){
 	int servtime = atoi(argv[4]); //avg serve time
 	int customers = atoi(argv[1]); //number of customers
 	int teller = atoi(argv[2]); //number of tellers
+
 	//Declare variable to hold seconds on clock.
 	time_t seconds;
 	/*
@@ -114,10 +91,12 @@ int main(int argc, char* argv[]){
 	Convert seconds to a unsigned
 	integer.
 	 */
+	int seed = time(&seconds);
 	srand((unsigned int) seconds);
 	if(argc>5){
 		if(atoi(argv[5]) != 0){
 			srand(atoi(argv[5]));
+			seed = atoi(argv[5]);
 		}
 	}
 	eventQueue *Clock;
@@ -127,7 +106,7 @@ int main(int argc, char* argv[]){
 	custFarm(custObjPtr,customers,simtime,Clock);
 	tellerFarm(tellObjPtr,teller,servtime,Clock);
 
-	goThroughActions(simtime,Clock,custObjPtr, tellObjPtr);
+	goThroughActions(simtime,Clock,custObjPtr, tellObjPtr,teller,seed);
 	//
 	return 0;
 }

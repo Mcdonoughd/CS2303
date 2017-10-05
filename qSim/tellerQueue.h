@@ -18,9 +18,10 @@ private:
 	int tellerLineLength;
 public:
 	tellerQueue();
+	priority_queue <int> PriorityQ();
 	int getTellerLineLength();
 	void setTellerLineLength();
-	void addCustomer(Customer* Jim);
+	void addCustomer(int id);
 	void removeCustomer();
 	void removeCustomerCheck(Customer* Jim);
 	virtual ~tellerQueue();
