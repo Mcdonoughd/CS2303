@@ -4,31 +4,21 @@
 #include <cstdlib>
 #include "tellerQueue.h"
 Teller::Teller(){
+	tellerLine = new tellerQueue;
 	this->totalServed = 0;
 	this->servTime = 0;
 	this->idleTime = 0;
 	this->ID = 0;
 	this->workingtime = 0;
 	actiontime = workingtime;
-	new tellerQueue;
-	priority_queue <int> tellersLine;
 }
 
-Teller::Teller(int id, int avgServTime){
-	this->ID = id;
-	this->totalServed = 0;
-	this->servTime = 2*avgServTime*rand()/float(RAND_MAX);
-	this->idleTime = 0;
-	this->workingtime = 0;
-	actiontime = workingtime;
-	new tellerQueue;
-	priority_queue <int> tellersLine;
-}
+
 void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed){
 	printf("Teller %d Looks into their line...\n",this->getid());
-	if(this->getTellerQueue().size()>0){
+	if(this->getTellerQueue()->tellerLine.size()>0){
 		printf("Teller %d is helping a customer...\n",this->getid());
-		this->getTellerQueue().pop();
+		this->getTellerQueue()->removeCustomer();
 		this->setactiontime(this->getservTime() + this->setidleTime()+currTime);
 		//check if goes over simTime for stats
 		return;
@@ -36,9 +26,9 @@ void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,in
 	else{
 		for(int i=0; i<=tellers-1;i++){
 			printf("Teller %d Looks into Teller's %d line...\n",this->getid(),tellerobjptr[i].getid());
-			if(tellerobjptr[i].getTellerQueue().size()>0){
+			if(tellerobjptr[i].getTellerQueue()->tellerLine.size()>0){
 				printf("Teller %d is helping a customer from Teller's %d line...\n",this->getid(),tellerobjptr[i].getid());
-				tellerobjptr[i].getTellerQueue().pop();
+				tellerobjptr[i].getTellerQueue()->removeCustomer();
 				this->setactiontime(this->getservTime() + this->setidleTime()+currTime);
 				//check if goes over simTime for stats
 			}
@@ -47,9 +37,11 @@ void Teller::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,in
 		this->setactiontime(this->setidleTime()+currTime);
 		//check if goes over simTime for stats
 	}
+
+
 }
-priority_queue <int> Teller::getTellerQueue(){
-	return tellersLine;
+tellerQueue* Teller::getTellerQueue(){
+	return tellerLine;
 }
 int Teller::gettotalServed(){
 	return this->totalServed;

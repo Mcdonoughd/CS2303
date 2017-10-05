@@ -16,17 +16,17 @@ Customer::Customer(int id, int simTime){
 }
 
 int Customer::getshortestline(Teller* tellerobjptr,int tellers){
-	unsigned int smallestline =10000;//if you have a line over 10000 customers long you either run a really good business or a really bad one
+	int smallestline =10000;//if you have a line over 10000 customers long you either run a really good business or a really bad one
 	int teller_with_smallest_line; //keeps track of the teller's position in the array with the smallest line.
 	for(int i=0;i<=tellers-1;i++){
-		if(tellerobjptr[i].getTellerQueue().size()<smallestline){
-			smallestline = tellerobjptr[i].getTellerQueue().size();
+		if(tellerobjptr[i].getTellerQueue()->getTellerLineLength()<smallestline){
+			smallestline = tellerobjptr[i].getTellerQueue()->getTellerLineLength();
 			teller_with_smallest_line = i;
 		}
-		else if(tellerobjptr[i].getTellerQueue().size()==smallestline){
+		else if(tellerobjptr[i].getTellerQueue()->getTellerLineLength()==smallestline){
 			int a=rand()%2; //get rand number 1 or 0
 			if(a==1){
-				smallestline = tellerobjptr[i].getTellerQueue().size();
+				smallestline = tellerobjptr[i].getTellerQueue()->getTellerLineLength();
 				teller_with_smallest_line = i;
 			}
 			else{/*Keep the old line as the smallest line*/}
@@ -38,9 +38,10 @@ int Customer::getshortestline(Teller* tellerobjptr,int tellers){
 
 void Customer::Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed){
 	printf("Customer %d has arrived!\n",this->ID);
-	tellerobjptr[getshortestline(tellerobjptr,tellers)].getTellerQueue().push(this->getid());
-	printf("Customer %d has joined Line %d!\n",this->ID,tellerobjptr[getshortestline(tellerobjptr,tellers)].getid());
-	cout << "Line" << tellerobjptr[getshortestline(tellerobjptr,tellers)].getid() <<" has "<<tellerobjptr[getshortestline(tellerobjptr,tellers)].getTellerQueue().size()<<" People!\n";
+	int shortline = getshortestline(tellerobjptr,tellers);
+	tellerobjptr[shortline].getTellerQueue()->tellerLine.push(this->getid());
+	printf("Customer %d has joined Line %d!\n",this->ID,tellerobjptr[shortline].getid());
+	cout << "Line " << tellerobjptr[shortline].getid() <<" has "<<tellerobjptr[shortline].getTellerQueue()->tellerLine.size()<<" People!\n";
 
 }
 

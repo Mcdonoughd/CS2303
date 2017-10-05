@@ -14,9 +14,7 @@ tellerQueue::tellerQueue(){
 	tellerLineLength = this->getTellerLineLength();
 	priority_queue <int> tellerLine;
 }//
-priority_queue <int> tellerQueue::PriorityQ(){
-	return this->tellerLine;
-}
+
 int tellerQueue::getTellerLineLength(){
 	this->setTellerLineLength();
 	return this->tellerLineLength;

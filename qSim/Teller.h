@@ -9,7 +9,6 @@
 #define TELLER_H_
 
 #include <iostream>
-#include <queue>
 #include <string>
 #include "Event.h"
 #include "tellerQueue.h"
@@ -23,12 +22,12 @@ private:
 	float servTime; //the amount of time it takes for a teller to serve a customer
 	int idleTime; // the amount of time a teller goes inactive after serving a customer
 	int workingtime; // the current time at which a teller is working
-	tellerQueue tellerLine; //the line in front of a teller
-	priority_queue <int> tellersLine;
+	 //the line in front of a teller
 public:
 	void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed) override;
 	int getactiontime();
-	priority_queue <int> getTellerQueue();
+	tellerQueue* tellerLine;
+	tellerQueue* getTellerQueue();
 	int gettotalServed();
 	float getservTime();
 	int getidleTime();
