@@ -100,35 +100,8 @@ void eventQueue::Print() {
 	}
 }
 
-/**
- * Append a node to the linked list given data
- */
-/*
-void eventQueue::Append(int data) {
 
-	// Create a new node
-	Event* newNode = new Event();
-	newNode->setactiontime(data);
-	newNode->SetNext(NULL);
 
-	// Create a temp pointer
-	Event *tmp = head;
-
-	if ( tmp != NULL ) {
-		// Nodes already present in the list
-		// Parse to end of list
-		while ( tmp->Next() != NULL ) {
-			tmp = tmp->Next();
-		}
-
-		// Point the last node to the new node
-		tmp->SetNext(newNode);
-	}
-	else {
-		// First node in the list
-		head = newNode;
-	}
-}
 /** Adds an event to the eventQueue
  * @param node the Event to be added
  */
