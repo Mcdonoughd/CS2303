@@ -5,7 +5,6 @@ class eventQueue{
 private:
 	Event *head;       //Node pointers to head and tail
 public:
-	//
 	eventQueue();
 	void Print();
 	int getsize();
