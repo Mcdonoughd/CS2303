@@ -1,8 +1,8 @@
 
 CFLAGS = -g -Wall
 
-main: Customer.o Event.o eventQueue.o Stats.o Teller.o tellerQueue.o
-	g++ $(CFLAGS) Customer.o Event.o eventQueue.o Stats.o Teller.o tellerQueue.o main.o docs -o qSim -lm
+main: main.o Customer.o Event.o eventQueue.o Stats.o Teller.o tellerQueue.o 
+	g++ $(CFLAGS) Customer.o Event.o eventQueue.o Stats.o Teller.o tellerQueue.o main.o  -o qSim -lm
 
 main.o: main.cpp
 	g++ $(CFLAGS) -c main.cpp -lm
