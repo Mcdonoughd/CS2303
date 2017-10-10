@@ -48,8 +48,6 @@ class Ant;
 /*********************************************************************
  ** Description: Driver function
  *********************************************************************/
-
-
 int STARTING_ANTS= 100;
 int STARTING_DOODLES = 5;
 int TIME_STEPS = 1000;
@@ -58,7 +56,7 @@ int PAUSE = 0;
 int main(int argc,char *argv[]) {
 	//istringstream ss;
 	if(argc == 1){
-		//MWS = 20;
+		MWS = 20;
 		STARTING_ANTS = 100;
 		STARTING_DOODLES = 5;
 		TIME_STEPS = 1000;
@@ -98,7 +96,7 @@ int main(int argc,char *argv[]) {
 		PAUSE = 0;
 	}
 	else if(argc == 6){
-		//MWS = atoi(argv[1]);
+		MWS = atoi(argv[1]);
 		STARTING_ANTS = atoi(argv[2]);
 		STARTING_DOODLES = atoi(argv[3]);
 		TIME_STEPS = atoi(argv[4]);
@@ -106,7 +104,7 @@ int main(int argc,char *argv[]) {
 		PAUSE = 0;
 	}
 	else {
-		//MWS = atoi(argv[1]);
+		MWS = atoi(argv[1]);
 		STARTING_ANTS = atoi(argv[2]);
 		STARTING_DOODLES = atoi(argv[3]);
 		TIME_STEPS = atoi(argv[4]);

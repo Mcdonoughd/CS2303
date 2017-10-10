@@ -8,7 +8,7 @@ using namespace std;
 class Organism;
 class Doodlebug;
 class Ant;
-const int MWS = 20;
+const int MWS = 1000;
 /*********************************************************************
  ** Description: World class declaration
  *********************************************************************/
@@ -34,6 +34,8 @@ public:
 	~World();
 private:
 	//2D array of pointers towards organism class
-	Organism* pGrid[MWS][MWS];
+	const int j = MWS;
+	void int
+	Organism* pGrid[20][20];
 
 };
