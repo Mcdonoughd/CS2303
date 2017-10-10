@@ -53,7 +53,7 @@ World::World() {
  ** Description: Initializes the board with Ants and Doodlebugs at a random location
  ** Parameters: int STARTING_ANTS int STARTING_DOODLES int DWS
  *********************************************************************/
-void World::Fill(int STARTING_ANTS,int STARTING_DOODLES,int DWS){
+void World::Fill(int STARTING_ANTS,int STARTING_DOODLES){
 	//integers for initial values of ants and doodlebugs for random filling of world
 	int numberOfAnts = 0;
 	int numberOfDoodles = 0;
@@ -93,7 +93,7 @@ void World::Fill(int STARTING_ANTS,int STARTING_DOODLES,int DWS){
  *********************************************************************/
 Organism* World::getFromWorld(int x, int y) {
 	//check to make sure in the bounds of the world
-	if ((x >= 0) && (x < MWS) && ( y >= 0) && (y < MWS)) {
+	if ((x >= 0) && (x < DWS) && ( y >= 0) && (y < DWS)) {
 		return pGrid[x][y];
 	}
 	return NULL;
@@ -107,7 +107,7 @@ Organism* World::getFromWorld(int x, int y) {
  *********************************************************************/
 void World::setInWorld(int x, int y, Organism *theOrganism) {
 	//check to make sure in the bounds of the world
-	if ((x >= 0) && (x < MWS) && (y >= 0) && (y < MWS)) {
+	if ((x >= 0) && (x < DWS) && (y >= 0) && (y < DWS)) {
 		pGrid[x][y] = theOrganism;
 	}
 }
@@ -122,9 +122,12 @@ void World::PrintWorld() {
 	//free up some space between generations
 	cout << "\n";
 	//print the array
-	for (int i = 0; i < MWS; ++i) {
-		for (int j = 0; j < MWS; ++j) {
+	for (int i = 0; i < DWS; ++i) {
+		for (int j = 0; j < DWS; ++j) {
 			//if no object is present output a blank space
+			if(j==0){
+				cout << "|";
+			}
 			if (pGrid[i][j] == NULL) {
 				cout << " " << "|"; // | just for formatting, easier to see cells
 			}
@@ -159,32 +162,31 @@ void World::RunTheGame() {
 	for(int i = 0; i < (DWS*DWS); i++) {
 		randomTable.push_back(i);
 	}
-
-	// using built-in random generator, shuffle the vector so its in a random order
+	//Shuffle the vector so its in a random order
 	random_shuffle(randomTable.begin(), randomTable.end());
 	//(1) First reset all organisms so none of them have moved
 	for (int i = 0; i < DWS; ++i) {
-		for (int j = 0; j < MWS; ++j) {
+		for (int j = 0; j < DWS; ++j) {
 			if (pGrid[i][j] != NULL) {
 				pGrid[i][j]->itMoved = false;
 			}
 		}
 	}
-
 	//NEW CODE
 	//random selection of ant/doodle for movement
 	for(vector<int>::iterator z = randomTable.begin(); z != randomTable.end(); ++z) {
+		int i = *z / DWS; //for row
+		int j = *z % DWS; //for column
 
-		int i = *z / 20; //for row
-		int j = *z % 20; //for column
-
+		//Move Doodlebugs
 		if ((pGrid[i][j] != NULL) && (pGrid[i][j]->getType() == DOODLEBUG)) {
 			if (pGrid[i][j]->itMoved == false) { //if they haven't moved
 				pGrid[i][j]->itMoved = true; // Mark as itMoved
-				pGrid[i][j]->move(); //move the doodlebugs! aka eat
+				pGrid[i][j]->move(); //Move the doodlebugs! aka eat
 			}
 		}
 
+		//Move Ants
 		if ((pGrid[i][j] != NULL) && (pGrid[i][j]->getType() == ANT)) {
 			if (pGrid[i][j]->itMoved == false) {
 				pGrid[i][j]->itMoved = true; // Mark as itMoved
@@ -195,8 +197,8 @@ void World::RunTheGame() {
 
 
 	//(4) Loop through the world to check for starving doodlebugs
-	for (int i = 0; i < MWS; ++i) {
-		for (int j = 0; j < MWS; ++j) {
+	for (int i = 0; i < DWS; ++i) {
+		for (int j = 0; j < DWS; ++j) {
 			if ((pGrid[i][j] != NULL) && (pGrid[i][j]->getType() == DOODLEBUG)) { //if doodlebug
 				if (pGrid[i][j]->starve()) { //if starving
 					delete (pGrid[i][j]); //then kill of that doodlebug
@@ -207,8 +209,8 @@ void World::RunTheGame() {
 	}
 
 	//(5) Loop through the world and check for breeding
-	for (int i = 0; i < MWS; ++i) {
-		for (int j = 0; j < MWS; ++j) {
+	for (int i = 0; i < DWS; ++i) {
+		for (int j = 0; j < DWS; ++j) {
 			//make sure the organism moved
 			if ((pGrid[i][j] != NULL) && (pGrid[i][j]->itMoved == true)) {
 				pGrid[i][j]->breed(); //breed that organism (if it can)

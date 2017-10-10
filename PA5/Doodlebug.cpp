@@ -1,4 +1,4 @@
-
+#include "Common.h"
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -77,7 +77,7 @@ void Doodlebug::move() {
 		return;
 	}
 	//similar algorithm below for eating down, left and right
-	else if ((y < MWS-1) && (world->getFromWorld(x, y+1) != NULL) && (world->getFromWorld(x, y+1)->getType() == ANT)) {
+	else if ((y < DWS-1) && (world->getFromWorld(x, y+1) != NULL) && (world->getFromWorld(x, y+1)->getType() == ANT)) {
 		delete (world->pGrid[x][y+1]);
 		world->pGrid[x][y+1] = this;
 		world->setInWorld(x, y, NULL);
@@ -95,7 +95,7 @@ void Doodlebug::move() {
 		return;
 	}
 	//eat right
-	else if ((x < MWS-1) && (world->getFromWorld(x+1, y) != NULL) && (world->getFromWorld(x+1, y)->getType() == ANT)) {
+	else if ((x < DWS-1) && (world->getFromWorld(x+1, y) != NULL) && (world->getFromWorld(x+1, y)->getType() == ANT)) {
 		delete (world->pGrid[x+1][y]);
 		world->pGrid[x+1][y] = this;
 		world->setInWorld(x, y, NULL);
@@ -178,7 +178,7 @@ void Doodlebug::breed() {
 			/*Doodlebug *newDoodle =*/ new Doodlebug(world, x, y-1);
 		}
 		//left
-		else if ((y < MWS-1) && (world->getFromWorld(x, y+1) == NULL)) {
+		else if ((y < DWS-1) && (world->getFromWorld(x, y+1) == NULL)) {
 			/*Doodlebug *newDoodle =*/ new Doodlebug(world, x, y+1);
 		}
 		//right
@@ -186,7 +186,7 @@ void Doodlebug::breed() {
 			/*Doodlebug *newDoodle =*/ new Doodlebug(world, x-1, y);
 		}
 		//down
-		else if ((x < MWS-1) && (world->getFromWorld(x+1, y) == NULL)) {
+		else if ((x < DWS-1) && (world->getFromWorld(x+1, y) == NULL)) {
 			/*Doodlebug *newDoodle =*/ new Doodlebug(world, x+1, y);
 		}
 	}
@@ -202,7 +202,7 @@ void Doodlebug::breed() {
  *********************************************************************/
 bool Doodlebug::starve() {
 	//starve
-	if (movesUntilStarve > DOODLE_STARVE) {
+	if (movesUntilStarve == DOODLE_STARVE) {
 		return true;
 	}
 	//survive

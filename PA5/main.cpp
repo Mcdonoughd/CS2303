@@ -40,7 +40,7 @@ class Ant;
 /*********************************************************************
  ** Description: Driver function
  *********************************************************************/
-int DWS = 20; //Desired Wolrd Size
+int DWS = 20; //Desired World Size
 int STARTING_ANTS= 100; //Starting Number of Ants
 int STARTING_DOODLES = 5; //Starting Number of DoodleBugs
 int TIME_STEPS = 1000; //Number of Iterations to go
@@ -104,7 +104,7 @@ int main(int argc,char *argv[]) {
 	//create a world object gWorld (game world) (constructs an array of pointers to organism objects)
 	World gWorld;
 	//Populates World
-	gWorld.Fill(STARTING_ANTS,STARTING_DOODLES,DWS);
+	gWorld.Fill(STARTING_ANTS,STARTING_DOODLES);
 	if(PAUSE > 0){
 		while (gameOver == false ){
 			//print the world array to the console
@@ -120,6 +120,7 @@ int main(int argc,char *argv[]) {
 			else {
 				//exit if user does not enter n
 				gameOver = true;
+				cout << "The Game has Ended" << endl;
 			}
 		}
 	}
