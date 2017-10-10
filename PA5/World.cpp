@@ -53,9 +53,47 @@ World::World() {
 	}
 }
 
+
+
+
+
+void World::Fill(int STARTING_ANTS,int STARTING_DOODLES,int DWS){
+
+	//integers for initial values of ants and doodlebugs for random filling of world
+	int numberOfAnts = 0;
+	int numberOfDoodles = 0;
+	//fill the world with 100 ants
+	while (numberOfAnts < STARTING_ANTS) {
+		//generate a random x and y coordinate
+		int x = rand() % DWS;
+		int y = rand() % DWS;
+		//if said coordinate is empty
+		if (this->getFromWorld(x,y) == NULL) {
+			//increase the counter
+			numberOfAnts++;
+			//create a pointer to Ant object
+			/*	Ant *pAnt = */new Ant(this, x, y);
+		}
+	}
+
+	//fill the world with 5 Doodlebugs
+	while (numberOfDoodles < STARTING_DOODLES) {
+		//generate a random x and y coordinate within desired world size
+		int x = rand()%DWS;
+		int y = rand()%DWS;
+		//if said coordinate is empty
+		if (this->getFromWorld(x,y) == NULL) {
+			//increase the counter
+			numberOfDoodles++;
+			//create a pointer to Doodle object
+			new Doodlebug(this, x, y);
+		}
+	}
+}
+
 /*********************************************************************
  ** Function: getFromWorld
- ** Description: retruns whatever an organism that is stored in the cell
+ ** Description: returns whatever organism that is stored in the cell
  ** at coordinates x and y of the array.
  ** Parameters: int x, int y
  *********************************************************************/
@@ -70,7 +108,7 @@ Organism* World::getFromWorld(int x, int y) {
 /*********************************************************************
  ** Function: setInWorld
  ** Description: Fills the cell at coordinates x and y with an object
- ** (pointer) from the organism (dervied) class
+ ** (pointer) from the organism (derived) class
  ** Parameters: int x, int y, Organism *theOrganism
  *********************************************************************/
 void World::setInWorld(int x, int y, Organism *theOrganism) {

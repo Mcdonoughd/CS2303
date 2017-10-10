@@ -20,22 +20,17 @@ class World {
 	friend class Ant;
 
 public:
-
 	//constructor
 	World();
-
 	//function for printing the world to the console
 	void PrintWorld();
 	void RunTheGame();
-
 	//functions for setting and getting organism in the array
 	Organism* getFromWorld(int x, int y);	//
 	void setInWorld(int x, int y, Organism *theOrganism);
+	void Fill(int STARTING_ANTS,int STARTING_DOODLES,int DWS);
 	~World();
 private:
 	//2D array of pointers towards organism class
-	const int j = MWS;
-	void int
-	Organism* pGrid[20][20];
-
+	Organism* pGrid[MWS][MWS];
 };
