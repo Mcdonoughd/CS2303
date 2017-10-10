@@ -7,16 +7,12 @@
 #include <time.h>
 #include <string>
 #include "World.h"
+#include "Common.h"
 #include "Organism.h"
 #include "Ant.h"
 #include "Doodlebug.h"
 using namespace std;
-
-
 //Delare known constants from instructions
-//constant for the world dimensions of 20x20
-//const int MWS = 20; //max world size
-
 //starting values for ants and doodlebugs
 
 //values for returning Ants and Doodlebugs
@@ -160,15 +156,12 @@ void World::RunTheGame() {
 
 	//create a new vector and fill it with 0 - 399, each number corresponds to a cell in the world
 	vector <int> randomTable;
-	for(int i = 0; i < 400; i++) {
+	for(int i = 0; i < (DWS*DWS); i++) {
 		randomTable.push_back(i);
 	}
 
 	// using built-in random generator, shuffle the vector so its in a random order
-	//http://www.cplusplus.com/reference/algorithm/random_shuffle/
 	random_shuffle(randomTable.begin(), randomTable.end());
-
-
 	//(1) First reset all organisms so none of them have moved
 	for (int i = 0; i < DWS; ++i) {
 		for (int j = 0; j < MWS; ++j) {

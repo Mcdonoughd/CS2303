@@ -4,7 +4,7 @@
  *  Created on: Feb 26, 2017
  *      Author: student
  */
-
+#include "Common.h"
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -19,9 +19,7 @@ using namespace std;
 
 
 //Delare known constants from instructions
-
 //starting values for ants and doodlebugs
-
 //values for returning Ants and Doodlebugs
 const int DOODLEBUG = 1;
 const int ANT = 2;
