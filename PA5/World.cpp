@@ -30,8 +30,6 @@ const int DOODLE_BREED = 8; //8 lifespans
 //value for counter to determine of a doodle should starve
 const int DOODLE_STARVE = 3; //3 lifespans
 
-//This was causing many errors, had to look up on stackoverflow
-//source: http://stackoverflow.com/questions/4757565/c-forward-declaration
 class Organism;
 class Doodlebug;
 class Ant;
@@ -54,11 +52,12 @@ World::World() {
 }
 
 
-
-
-
+/*********************************************************************
+ ** Function: Fill
+ ** Description: Initializes the board with Ants and Doodlebugs at a random location
+ ** Parameters: int STARTING_ANTS int STARTING_DOODLES int DWS
+ *********************************************************************/
 void World::Fill(int STARTING_ANTS,int STARTING_DOODLES,int DWS){
-
 	//integers for initial values of ants and doodlebugs for random filling of world
 	int numberOfAnts = 0;
 	int numberOfDoodles = 0;
@@ -75,7 +74,6 @@ void World::Fill(int STARTING_ANTS,int STARTING_DOODLES,int DWS){
 			/*	Ant *pAnt = */new Ant(this, x, y);
 		}
 	}
-
 	//fill the world with 5 Doodlebugs
 	while (numberOfDoodles < STARTING_DOODLES) {
 		//generate a random x and y coordinate within desired world size
@@ -172,7 +170,7 @@ void World::RunTheGame() {
 
 
 	//(1) First reset all organisms so none of them have moved
-	for (int i = 0; i < MWS; ++i) {
+	for (int i = 0; i < DWS; ++i) {
 		for (int j = 0; j < MWS; ++j) {
 			if (pGrid[i][j] != NULL) {
 				pGrid[i][j]->itMoved = false;
