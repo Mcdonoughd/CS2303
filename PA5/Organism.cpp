@@ -1,4 +1,9 @@
-
+/*
+ * Organism.cpp
+ *
+ *  Created on: October 11, 2017
+ *      Author: Dan M & Surya V.
+ */
 #include "Common.h"
 #include <iostream>
 #include <vector>
@@ -28,14 +33,10 @@ const int DOODLE_BREED = 8; //8 lifespans
 //value for counter to determine of a doodle should starve
 const int DOODLE_STARVE = 3; //3 lifespans
 
-/*********************************************************************
- ** Description: Implementation for Organism class
- *********************************************************************/
-/*********************************************************************
- ** Constructor: default
- ** Description: Creates a default organism
- ** Paramters: None
- *********************************************************************/
+/**
+ * Constructor:
+ * Creates a default organism
+ */
 Organism::Organism() {
 
 	x = 0;
@@ -50,11 +51,13 @@ Organism::Organism() {
 	lifespans = 0;
 }
 
-/*********************************************************************
- ** Constructor: overloaded
- ** Description: Creates an organism object which is in the world array
- ** Paramters: World *pWorld, int x, int y
- *********************************************************************/
+/**
+ * Constructor:
+ * Creates an organism object which is in the world array
+ * @param pWorld
+ * @param x
+ * @param y
+ */
 Organism::Organism(World *pWorld, int x, int y) {
 
 	this->x = x;
@@ -70,6 +73,9 @@ Organism::Organism(World *pWorld, int x, int y) {
 	//counter for breed/death conditions
 	lifespans = 0;
 }
+/**
+ * Destructor
+ */
 Organism::~Organism(){
 
 }

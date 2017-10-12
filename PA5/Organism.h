@@ -1,7 +1,13 @@
+/*
+ * Organism.h
+ *
+ *  Created on: October 11, 2017
+ *      Author: Dan M & Surya V.
+ */
 
-/*********************************************************************
- ** Description: Organism class declaration (abstract class)
- *********************************************************************/
+/*
+ * Organism class represents both Ants and Doodlebugs
+ */
 class Organism {
 
 	//Since we need to allow the world to interact with organism, make it a friend

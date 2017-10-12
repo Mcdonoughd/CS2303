@@ -1,4 +1,9 @@
-
+/*
+ * Ant.cpp
+ *
+ *  Created on: October 11, 2017
+ *      Author: Dan M & Surya V.
+ */
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -34,47 +39,44 @@ const int DOODLE_STARVE = 3; //3 lifespans
 class Organism;
 class Doodlebug;
 class Ant;
-/*********************************************************************
- ** Description: Implementation for Ant class
- *********************************************************************/
-/*********************************************************************
- ** Constructor: default
- ** Description: uses the default constructor from organism to create
- ** a default ant
- ** Parameters: none
- *********************************************************************/
+
+/**
+ * Constructor:
+ * uses the default constructor from organism to create
+ * a default ant
+ */
 Ant::Ant() : Organism() {
 	//inentionally left blank
 }
 
-/*********************************************************************
- ** Constructor: overloaded
- ** Description: Creates an ant object in world array by using the
- ** overloaded constructor in organism.
- ** Parameters: World *world, int x, int y
- *********************************************************************/
+/**
+ * Constructor:
+ * Creates an ant object in world array by using the
+ * overloaded constructor in organism.
+ * @param world
+ * @param x
+ * @param y
+ */
 Ant::Ant(World *world, int x, int y) : Organism(world,x,y) {
 	//intentionally left blank
 }
 
-/*********************************************************************
- ** Function: starve
- ** Description: Always returns false, because ants never starve, Only
- ** Doodlebugs do.
- ** Parameters: none
- *********************************************************************/
+/**
+ * starve:
+ * Always returns false, because ants never starve, Only
+ * Doodlebugs do.
+ */
 bool Ant::starve() {
 	return false; //never starves
 }
 
-/*********************************************************************
- ** Function: move
- ** Description: Redefined the pure virtual function from organism to
+/**
+ * move:
+ * Redefined the pure virtual function from organism to
  ** reflect ant's behavior in regards to move. Randomly selects a direction
  ** 0, 1, 2, 3 for up, down, left, right. If empty (NULL) then it moves
  ** the ant from prvious cell to new cell, and sets old sell to NULL.
- ** Parameters: none
- *********************************************************************/
+ */
 void Ant::move() {
 
 	int moveDirection = rand() % 4; //generates 0, 1, 2, 3
@@ -114,24 +116,24 @@ void Ant::move() {
 	}
 }
 
-/*********************************************************************
- ** Function: getType
- ** Description: Redefined the pure virtual function from organism to
- ** return the const integer value representing ANT.
- ** Parameters: none
- *********************************************************************/
+/**
+ * Redefined the pure virtual function from organism to
+ * return the const integer value representing ANT.
+ *
+ * @return
+ */
 int Ant::getType() {
 	return ANT;
 }
 
-/*********************************************************************
- ** Function: breed
- ** Description: Redefined the pure virtual function from organism to
- ** create a new ant if, the ant in question survives 3 lifespans. It
- ** won't breed if there is not an open spot. My choice to check down,
- ** then up, then left, then right.
- ** Parameters: none
- *********************************************************************/
+
+/**
+ * breed:
+ * Redefined the pure virtual function from organism to
+ * create a new ant if, the ant in question survives 3 lifespans. It
+ * won't breed if there is not an open spot. My choice to check down,
+ * then up, then left, then right.
+ */
 void Ant::breed() {
 	//increment lifespans every time the function is called
 	lifespans++;
@@ -158,6 +160,9 @@ void Ant::breed() {
 		}
 	}
 }
+/**
+ * Destructor
+ */
 Ant::~Ant(){
 
 }

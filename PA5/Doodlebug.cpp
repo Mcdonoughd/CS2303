@@ -1,3 +1,9 @@
+/*
+ * Doodlebug.cpp
+ *
+ *  Created on: October 11, 2017
+ *      Author: Dan M & Surya V.
+ */
 #include "Common.h"
 #include <iostream>
 #include <vector>
@@ -28,38 +34,36 @@ const int DOODLE_BREED = 8; //8 lifespans
 //value for counter to determine of a doodle should starve
 const int DOODLE_STARVE = 3; //3 lifespans
 
-/*********************************************************************
- ** Description: Implementation for Doodlebug class
- *********************************************************************/
-/*********************************************************************
- ** Constructor: default
- ** Description: uses the default constructor from organism to create
- ** a default Doodlebug. Sets moveUntilStarve to 0.
- ** Parameters: none
- *********************************************************************/
+/**
+ * Doodlebug Construcor
+ * Description: uses the default constructor from organism to create
+ * a default Doodlebug. Sets moveUntilStarve to 0.
+ */
 Doodlebug::Doodlebug() : Organism() {
 	movesUntilStarve = 0;
 }
 
-/*********************************************************************
- ** Constructor: overloaded
- ** Description: uses the overloaded constructor from organism to create
- ** an overloaded Doodlebug. Sets moveUntilStarve to 0.
- ** Parameters: none
- *********************************************************************/
+/**
+ * Constructor: overloaded
+ * Description: uses the overloaded constructor from organism to create
+ * an overloaded Doodlebug. Sets moveUntilStarve to 0.
+ * @param world
+ * @param x
+ * @param y
+ */
 Doodlebug::Doodlebug(World *world, int x, int y) : Organism(world, x, y) {
 	movesUntilStarve = 0;
 }
 
-/*********************************************************************
- ** Function: move
- ** Description: Redefined the pure virtual function from organism to
- ** reflect Doodlenbug's behavior in regards to move. First it scans up,
- ** down, left, then right to look for an ant. As soon as one is found
- ** the Doodlebug kills the ant (ant cell deleted) and moves to that
- ** spot. moveUntilStarve resets if this happens
- ** Parameters: none
- *********************************************************************/
+
+/**
+ * Move
+ * Redefined the pure virtual function from organism to
+ * reflect Doodlenbug's behavior in regards to move. First it scans up,
+ * down, left, then right to look for an ant. As soon as one is found
+ * the Doodlebug kills the ant (ant cell deleted) and moves to that
+ * spot. moveUntilStarve resets if this happens
+ */
 void Doodlebug::move() {
 
 	//if, else if statements for if the Doodlebug can eat an ant
@@ -145,24 +149,23 @@ void Doodlebug::move() {
 	movesUntilStarve++;
 }
 
-/*********************************************************************
- ** Function: getType
- ** Description: Redefined the pure virtual function from organism to
- ** return the const integer value representing DOODLEBUG.
- ** Parameters: none
- *********************************************************************/
+/**
+ * getType
+ * Redefined the pure virtual function from organism to
+ * return the const integer value representing DOODLEBUG.
+ * @return
+ */
 int Doodlebug::getType() {
 	return DOODLEBUG;
 }
 
-/*********************************************************************
- ** Function: breed
- ** Description: Redefined the pure virtual function from organism to
- ** create a new doodlebug if, the doodlebug in question survives 8 lifespans.
- ** It won't breed if there is not an open spot. My choice to check down,
- ** then up, then left, then right.
- ** Parameters: none
- *********************************************************************/
+/**
+ * breed
+ * Redefined the pure virtual function from organism to
+ * create a new doodlebug if, the doodlebug in question survives 8 lifespans.
+ * It won't breed if there is not an open spot. My choice to check down,
+ * then up, then left, then right.
+ */
 void Doodlebug::breed() {
 
 	//increase the lifespans of the Doodlebug
@@ -192,17 +195,17 @@ void Doodlebug::breed() {
 	}
 }
 
-/*********************************************************************
- ** Function: starve
- ** Description: Redefined the pure virtual function starve from abstract
- ** class Organism to return true if a Doodlebug has not eaten in 3
- ** turns and false if they have. Use the movesUntilStarve private
- ** variable to determine this.
- ** Parameters: none
- *********************************************************************/
+
+/**
+ * starve
+ * Redefined the pure virtual function starve from abstract
+ * class Organism to return true if a Doodlebug has not eaten in 3
+ * turns and false if they have. Use the movesUntilStarve private
+ * variable to determine this.
+ */
 bool Doodlebug::starve() {
 	//starve
-	if (movesUntilStarve == DOODLE_STARVE) {
+	if (movesUntilStarve > DOODLE_STARVE) {
 		return true;
 	}
 	//survive
@@ -210,6 +213,9 @@ bool Doodlebug::starve() {
 		return false;
 	}
 }
+/**
+ * Destructor
+*/
 Doodlebug::~Doodlebug(){
 
 }

@@ -1,5 +1,9 @@
-
-
+/*
+ * World.cpp
+ *
+ *  Created on: October 11, 2017
+ *      Author: Dan M & Surya V.
+ */
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -30,14 +34,11 @@ class Organism;
 class Doodlebug;
 class Ant;
 
-/*********************************************************************
- ** Description: Implementation for World class
- *********************************************************************/
-/*********************************************************************
- ** Constructor: default
- ** Description: fills organism array with NULL values
- ** Parameters: none
- *********************************************************************/
+
+/**
+ * Constructor:
+ * fills organism array with NULL values
+ */
 World::World() {
 	//fill the word with null objects (empty spaces)
 	for (int i = 0; i < MWS; ++i) {
@@ -48,11 +49,12 @@ World::World() {
 }
 
 
-/*********************************************************************
- ** Function: Fill
- ** Description: Initializes the board with Ants and Doodlebugs at a random location
- ** Parameters: int STARTING_ANTS int STARTING_DOODLES int DWS
- *********************************************************************/
+/**
+ * Fill:
+ * Initializes the board with Ants and Doodlebugs at a random location
+ * @param STARTING_ANTS
+ * @param STARTING_DOODLES
+ */
 void World::Fill(int STARTING_ANTS,int STARTING_DOODLES){
 	//integers for initial values of ants and doodlebugs for random filling of world
 	int numberOfAnts = 0;
@@ -85,12 +87,15 @@ void World::Fill(int STARTING_ANTS,int STARTING_DOODLES){
 	}
 }
 
-/*********************************************************************
- ** Function: getFromWorld
- ** Description: returns whatever organism that is stored in the cell
- ** at coordinates x and y of the array.
- ** Parameters: int x, int y
- *********************************************************************/
+
+/**
+ * getFromWorld:
+ * returns whatever organism that is stored in the cell
+ * at coordinates x and y of the array.
+ * @param x
+ * @param y
+ * @return
+ */
 Organism* World::getFromWorld(int x, int y) {
 	//check to make sure in the bounds of the world
 	if ((x >= 0) && (x < DWS) && ( y >= 0) && (y < DWS)) {
@@ -99,12 +104,14 @@ Organism* World::getFromWorld(int x, int y) {
 	return NULL;
 }
 
-/*********************************************************************
- ** Function: setInWorld
- ** Description: Fills the cell at coordinates x and y with an object
- ** (pointer) from the organism (derived) class
- ** Parameters: int x, int y, Organism *theOrganism
- *********************************************************************/
+/**
+ * setInWorld:
+ * Fills the cell at coordinates x and y with an object
+ * (pointer) from the organism (derived) class
+ * @param x
+ * @param y
+ * @param theOrganism
+ */
 void World::setInWorld(int x, int y, Organism *theOrganism) {
 	//check to make sure in the bounds of the world
 	if ((x >= 0) && (x < DWS) && (y >= 0) && (y < DWS)) {
@@ -112,12 +119,11 @@ void World::setInWorld(int x, int y, Organism *theOrganism) {
 	}
 }
 
-/*********************************************************************
- ** Function: PrintWorld
- ** Description: Prints the world to the console using O for ants and
- ** X for doodlebugs.
- ** Parameters: none
- *********************************************************************/
+/**
+ * PrintWorld:
+ *  Prints the world to the console using O for ants and
+ *  X for doodlebugs.
+ */
 void World::PrintWorld() {
 	//free up some space between generations
 	cout << "\n";
@@ -143,18 +149,17 @@ void World::PrintWorld() {
 	}
 }
 
-/*********************************************************************
- ** Function: RunTheGame
- ** Description: (1) Resets all organism so itMoved is false in the
- ** world (2) Loop through the world and move the Doodlebugs and set
- ** them as "having itMoved" if they moved (3) Do the same thing for ants
- ** (4) Check for starving doodlebugs and kill them off (5) check the
- ** bool for breeding and breed if they can. It is important to note the
- ** itMoved variable. Since we are looping from top down, this ensures
- ** that one organism doesnt move multiple times in one turn. Once it
- ** gets pinged as having moved, it wont again.
- ** Parameters: none
- *********************************************************************/
+/**
+ * RunTheGame
+ * 1) Resets all organism so itMoved is false in the
+ * world (2) Loop through the world and move the Doodlebugs and set
+ * them as "having itMoved" if they moved (3) Do the same thing for ants
+ * (4) Check for starving doodlebugs and kill them off (5) check the
+ * bool for breeding and breed if they can. It is important to note the
+ * itMoved variable. Since we are looping from top down, this ensures
+ * that one organism doesnt move multiple times in one turn. Once it
+ * gets pinged as having moved, it wont again.
+ */
 void World::RunTheGame() {
 
 	//create a new vector and fill it with 0 - 399, each number corresponds to a cell in the world
@@ -172,7 +177,7 @@ void World::RunTheGame() {
 			}
 		}
 	}
-	//NEW CODE
+
 	//random selection of ant/doodle for movement
 	for(vector<int>::iterator z = randomTable.begin(); z != randomTable.end(); ++z) {
 		int i = *z / DWS; //for row
@@ -218,6 +223,26 @@ void World::RunTheGame() {
 		}
 	}
 
+}
+
+
+
+/**
+ * empty:
+ * returns true is all cells on the board are null
+ * @return
+ */
+bool World::empty(){
+	//Loop through the world and check for null pointers
+		for (int i = 0; i < DWS; ++i) {
+			for (int j = 0; j < DWS; ++j) {
+				//check if board space is empthy
+				if ((pGrid[i][j] != NULL)) {
+					return false; //There si something still on the board
+				}
+			}
+		}
+		return true; //There is nothing on the board
 }
 World::~World(){
 

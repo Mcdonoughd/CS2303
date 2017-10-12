@@ -1,8 +1,8 @@
 /*
  * main.cpp
  *
- *  Created on: Feb 26, 2017
- *      Author: student
+ *  Created on: October 11, 2017
+ *      Author: Dan M & Surya V.
  */
 #include "Common.h"
 #include <iostream>
@@ -31,8 +31,7 @@ const int DOODLE_BREED = 8; //8 lifespans
 //value for counter to determine of a doodle should starve
 const int DOODLE_STARVE = 3; //3 lifespans
 
-//This was causing many errors, had to look up on stackoverflow
-//source: http://stackoverflow.com/questions/4757565/c-forward-declaration
+//forward referencing to prevent errors
 class Organism;
 class Doodlebug;
 class Ant;
@@ -50,6 +49,12 @@ int PAUSE = 0; //should the user have to press N between each time_step (0<true,
 bool gameOver = false;
 string userInput = "none yet";
 
+/**
+ * Main takes the input arguments and sets default parameters for running the program, then runs the program
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc,char *argv[]) {
 	if (argc == 2){
 		DWS = atoi(argv[1]);
@@ -107,10 +112,18 @@ int main(int argc,char *argv[]) {
 	gWorld.Fill(STARTING_ANTS,STARTING_DOODLES);
 	if(PAUSE > 0){
 		while (gameOver == false ){
+			if(gWorld.empty()){
+				gWorld.PrintWorld(); //print the empty board
+				gameOver = true;
+				cout << "The Game has Ended" << endl;
+
+				return 0;
+			}
 			//print the world array to the console
 			gWorld.PrintWorld();
 			//run 1 lifetime (1 step)
 			gWorld.RunTheGame();
+
 			cout << "Enter [n] to see the next generation : Any other key to exit" << endl;
 			cin >> userInput;
 			if (userInput == "n") {
@@ -129,12 +142,20 @@ int main(int argc,char *argv[]) {
 		gWorld.PrintWorld();
 		while(gameOver == false){
 			for(int p=0; p<TIME_STEPS; p++){
+				if(gWorld.empty()){
+					gameOver = true;
+					cout << "The Game has Ended" << endl;
+
+					return 0;
+				}
 				//run 1 lifetime (1 step)
 				gWorld.RunTheGame();
 				gWorld.PrintWorld();
 			}
 			gameOver = true;
 			cout << "The Game has Ended" << endl;
+
+			return 0;
 		}
 	}
 	return 0;

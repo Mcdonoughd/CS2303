@@ -1,8 +1,13 @@
+/*
+ * Doodlebug.h
+ *
+ *  Created on: October 11, 2017
+ *      Author: Dan M & Surya V.
+ */
 
-
-/*********************************************************************
- ** Description: Doodlebug class declaration
- *********************************************************************/
+/*
+ * Doodlebug class represents a Doodlebug
+ */
 class Doodlebug : public Organism {
 
 	friend class World;

@@ -1,10 +1,15 @@
-
+/*
+ * Ant.h
+ *
+ *  Created on: October 11, 2017
+ *      Author: Dan M & Surya V.
+ */
 
 using namespace std;
 
-/*********************************************************************
- ** Description: Ant class declaration
- *********************************************************************/
+/*
+ * Ant class represents an Ant
+ */
 class Ant : public Organism {
 
 	friend class World;
