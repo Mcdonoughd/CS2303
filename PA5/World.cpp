@@ -244,6 +244,41 @@ bool World::empty(){
 		}
 		return true; //There is nothing on the board
 }
+/**
+ * numAnts
+ * Loops through the board and returns the number of Ants in the board
+ * @return
+ */
+int World::numAnts(){
+	int numAnts =0;
+	//(4) Loop through the world to check for starving doodlebugs
+		for (int i = 0; i < DWS; ++i) {
+			for (int j = 0; j < DWS; ++j) {
+				if ((pGrid[i][j] != NULL) && (pGrid[i][j]->getType() == ANT)) { //if doodlebug
+					numAnts++;
+				}
+			}
+		}
+		return numAnts;
+}
+/**
+ * numDoodles:
+ * Loops through the board and returns the number of Doodlebugs in the board
+ * @return
+ */
+int World::numDoodles(){
+	int numDoodle =0;
+	//(4) Loop through the world to check for starving doodlebugs
+		for (int i = 0; i < DWS; ++i) {
+			for (int j = 0; j < DWS; ++j) {
+				if ((pGrid[i][j] != NULL) && (pGrid[i][j]->getType() == DOODLEBUG)) { //if doodlebug
+					numDoodle++;
+				}
+			}
+		}
+		return numDoodle;
+}
+
 World::~World(){
 
 }

@@ -23,22 +23,16 @@ using namespace std;
 //values for returning Ants and Doodlebugs
 const int DOODLEBUG = 1;
 const int ANT = 2;
-
 //Values for counter when determining if ants or doodles should breed
 const int ANT_BREED = 3; //3 lifespans
 const int DOODLE_BREED = 8; //8 lifespans
-
 //value for counter to determine of a doodle should starve
 const int DOODLE_STARVE = 3; //3 lifespans
-
 //forward referencing to prevent errors
 class Organism;
 class Doodlebug;
 class Ant;
 
-/*********************************************************************
- ** Description: Driver function
- *********************************************************************/
 int DWS = 20; //Desired World Size
 int STARTING_ANTS= 100; //Starting Number of Ants
 int STARTING_DOODLES = 5; //Starting Number of DoodleBugs
@@ -48,6 +42,36 @@ int PAUSE = 0; //should the user have to press N between each time_step (0<true,
 //variables for replaying game
 bool gameOver = false;
 string userInput = "none yet";
+int BIRTH_ANTS=0;//Number of Ants birthed in sim
+int BIRTH_DOODLEBUGS=0;//Number of doodlebugs in sim
+//create a world object gWorld (game world) (constructs an array of pointers to organism objects)
+World gWorld;
+/**
+ * Output:
+ *  prints out the required termination defined as:
+ *  the original command line as represented by argv,
+ *  the number of steps simulated,
+ *  the total number of ants during the course of the simulation and the number remaining,
+ *  the total number of doodlebugs in the course of the simulation and the number remaining,
+ * 	a picture of the final grid. (as gWorld is defined after this declaration gWorld.Printworld() will just be called after this function call)
+ * 	@param i
+ */
+void Output(int i){
+	printf("Desired World Size: %d\n",DWS);
+	printf("Starting Number of Ants: %d\n",STARTING_ANTS);
+	printf("Starting Number of Doodlebugs: %d\n",STARTING_DOODLES);
+	printf("Number of Steps: %d\n",TIME_STEPS);
+	printf("Random Seed: %d\n",SEED);
+	printf("PAUSE STATE: %d\n",PAUSE);
+	printf("Steps Simulated: %d\n",i);
+	printf("Total Number of Ants: %d\n",(STARTING_ANTS+BIRTH_ANTS));
+	printf("Remaining Number of Ants: %d\n", gWorld.numAnts());
+	printf("Total Number of Doodlebugs: %d\n",(STARTING_DOODLES+BIRTH_DOODLEBUGS));
+	printf("Remaining Number of Doodlebugs: %d\n",gWorld.numDoodles());
+	printf("Final Grid:\n");
+	gWorld.PrintWorld();
+}
+
 
 /**
  * Main takes the input arguments and sets default parameters for running the program, then runs the program
@@ -81,14 +105,7 @@ int main(int argc,char *argv[]) {
 		TIME_STEPS = atoi(argv[4]);
 		SEED = atoi(argv[5]);
 	}
-	else {
-		DWS = atoi(argv[1]);
-		STARTING_ANTS = atoi(argv[2]);
-		STARTING_DOODLES = atoi(argv[3]);
-		TIME_STEPS = atoi(argv[4]);
-		SEED = atoi(argv[5]);
-		PAUSE = atoi(argv[6]);
-	}
+	else {}
 	//seed the timer for generating random numbers
 	srand(SEED);
 	//directions and description
@@ -106,17 +123,18 @@ int main(int argc,char *argv[]) {
 	cout << "**		  BREED - If they have an adjacent open cell and survive 3 time steps" << endl;
 	cout << "\n";
 
-	//create a world object gWorld (game world) (constructs an array of pointers to organism objects)
-	World gWorld;
+
 	//Populates World
 	gWorld.Fill(STARTING_ANTS,STARTING_DOODLES);
 	if(PAUSE > 0){
-		while (gameOver == false ){
+
+		//keep track of number of steps
+		for(int p=0; p<TIME_STEPS; p++){
 			if(gWorld.empty()){
 				gWorld.PrintWorld(); //print the empty board
 				gameOver = true;
 				cout << "The Game has Ended" << endl;
-
+				Output(p);
 				return 0;
 			}
 			//print the world array to the console
@@ -134,30 +152,36 @@ int main(int argc,char *argv[]) {
 				//exit if user does not enter n
 				gameOver = true;
 				cout << "The Game has Ended" << endl;
+				Output(p);
+				return 0;
+
 			}
 		}
+		gameOver = true;
+		cout << "The Game has Ended" << endl;
+		Output(TIME_STEPS);
+		return 0;
 	}
 	else{
 		//print the world array to the console
 		gWorld.PrintWorld();
-		while(gameOver == false){
-			for(int p=0; p<TIME_STEPS; p++){
-				if(gWorld.empty()){
-					gameOver = true;
-					cout << "The Game has Ended" << endl;
-
-					return 0;
-				}
-				//run 1 lifetime (1 step)
-				gWorld.RunTheGame();
-				gWorld.PrintWorld();
+		for(int p=0; p<TIME_STEPS; p++){
+			if(gWorld.empty()){
+				gameOver = true;
+				cout << "The Game has Ended" << endl;
+				Output(p);
+				return 0;
 			}
-			gameOver = true;
-			cout << "The Game has Ended" << endl;
-
-			return 0;
+			//run 1 lifetime (1 step)
+			gWorld.RunTheGame();
+			gWorld.PrintWorld();
 		}
+		gameOver = true;
+		cout << "The Game has Ended" << endl;
+		Output(TIME_STEPS);
+		return 0;
 	}
+
 	return 0;
 }
 

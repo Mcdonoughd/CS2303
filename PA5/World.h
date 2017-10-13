@@ -34,6 +34,8 @@ public:
 	Organism* getFromWorld(int x, int y);	//
 	void setInWorld(int x, int y, Organism *theOrganism);
 	void Fill(int STARTING_ANTS,int STARTING_DOODLES);
+	int numAnts();
+	int numDoodles();
 	~World();
 private:
 	//2D array of pointers towards organism class

@@ -123,7 +123,7 @@ void Doodlebug::move() {
 	}
 	//attempt to move down
 	else if (moveDirection==1) {
-		if ((y < MWS-1) && (world->getFromWorld(x, y+1) == NULL)) {
+		if ((y < DWS-1) && (world->getFromWorld(x, y+1) == NULL)) {
 			world->setInWorld(x, y+1, world->getFromWorld(x, y));
 			world->setInWorld(x, y, NULL);
 			y++;
@@ -139,7 +139,7 @@ void Doodlebug::move() {
 	}
 	//attempt to move right
 	else {
-		if ((x < MWS-1) && (world->getFromWorld(x+1, y) == NULL)) {
+		if ((x < DWS-1) && (world->getFromWorld(x+1, y) == NULL)) {
 			world->setInWorld(x+1, y, world->getFromWorld(x, y));
 			world->setInWorld(x, y, NULL);
 			x++;
@@ -179,18 +179,22 @@ void Doodlebug::breed() {
 		//above
 		if ((y > 0) && (world->getFromWorld(x, y-1) == NULL)) {
 			/*Doodlebug *newDoodle =*/ new Doodlebug(world, x, y-1);
+			BIRTH_DOODLEBUGS++;
 		}
 		//left
 		else if ((y < DWS-1) && (world->getFromWorld(x, y+1) == NULL)) {
 			/*Doodlebug *newDoodle =*/ new Doodlebug(world, x, y+1);
+			BIRTH_DOODLEBUGS++;
 		}
 		//right
 		else if ((x > 0) && (world->getFromWorld(x-1, y) == NULL)) {
 			/*Doodlebug *newDoodle =*/ new Doodlebug(world, x-1, y);
+			BIRTH_DOODLEBUGS++;
 		}
 		//down
 		else if ((x < DWS-1) && (world->getFromWorld(x+1, y) == NULL)) {
 			/*Doodlebug *newDoodle =*/ new Doodlebug(world, x+1, y);
+			BIRTH_DOODLEBUGS++;
 		}
 	}
 }

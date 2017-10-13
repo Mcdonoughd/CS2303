@@ -4,6 +4,7 @@
  *  Created on: October 11, 2017
  *      Author: Dan M & Surya V.
  */
+#include "Common.h"
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -92,7 +93,7 @@ void Ant::move() {
 	}
 	// Try to move down
 	else if (moveDirection == 1) {
-		if ((y < MWS-1) && (world->getFromWorld(x, y+1) == NULL)) {
+		if ((y < DWS-1) && (world->getFromWorld(x, y+1) == NULL)) {
 			world->setInWorld(x, y+1, world->getFromWorld(x, y));  // Move to new spot
 			world->setInWorld(x, y, NULL);  // Set current spot to empty
 			y++;
@@ -108,7 +109,7 @@ void Ant::move() {
 	}
 	// Try to move right
 	else {
-		if ((x < MWS-1) && (world->getFromWorld(x+1, y) == NULL)) {
+		if ((x < DWS-1) && (world->getFromWorld(x+1, y) == NULL)) {
 			world->setInWorld(x+1, y, world->getFromWorld(x, y));  // Move to new spot
 			world->setInWorld(x, y, NULL);  // Set current spot to empty
 			x++;
@@ -146,17 +147,22 @@ void Ant::breed() {
 
 		if ((y > 0) && (world->getFromWorld(x, y-1) == NULL)) {
 			/*Ant *spawn =*/  new Ant(world, x, y-1);
+			BIRTH_ANTS++;
 		}
 		//checking to ensure not off map
-		else if ((y < MWS-1) && (world->getFromWorld(x, y+1) == NULL)) {
-			/*Ant *spawn =*/  new Ant(world, x, y+1);
+		else if ((y < DWS-1) && (world->getFromWorld(x, y+1) == NULL)) {
+			/*Ant *spawn =*/  new Ant(world, x, y+1);BIRTH_ANTS++;
+
+
 		}
 		else if ((x > 0) && (world->getFromWorld(x-1, y) == NULL)) {
 			/*Ant *spawn =*/ new Ant(world, x-1, y);
+			BIRTH_ANTS++;
 		}
 		//checking to ensure not off map
-		else if ((x < MWS-1) && (world->getFromWorld(x+1, y) == NULL)) {
+		else if ((x < DWS-1) && (world->getFromWorld(x+1, y) == NULL)) {
 			/*Ant *spawn =*/ new Ant(world, x+1, y);
+			BIRTH_ANTS++;
 		}
 	}
 }

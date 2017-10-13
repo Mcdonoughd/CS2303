@@ -5,3 +5,5 @@
  *      Author: Dan M & Surya V.
  */
 extern int DWS;
+extern int BIRTH_ANTS;
+extern int BIRTH_DOODLEBUGS;
