@@ -8,42 +8,22 @@
 #ifndef TELLER_H_
 #define TELLER_H_
 
-#include <iostream>
-#include <string>
+#include <queue>
 #include "Event.h"
-#include "tellerQueue.h"
+#include "Customer.h"
 using namespace std;
 
-class Teller : public Event {
-private:
-
-	int ID; //A teller's ID
-	int totalServed; //Count of how many customers a teller has served
-	float servTime; //the amount of time it takes for a teller to serve a customer
-	int idleTime; // the amount of time a teller goes inactive after serving a customer
-	int workingtime; // the current time at which a teller is working
-
+class Teller: public Event {
 public:
-	void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed,Stats* stat) override;
-	int getactiontime();
-	void LoadStatsIdle(int currTime,int simTime,Stats* stat);
-	void LoadStats(int currTime,int simTime,Stats* stat);
-	bool oversimtime(int curr,int sim);
-	bool oversimtimeidle(int curr,int sim);
-	tellerQueue* tellerLine;//the line in front of a teller (made public for ease and due to time constraints
-	void settellerQ(tellerQueue* t);
-	tellerQueue* getTellerQueue();
-	int gettotalServed();
-	float getservTime();
-	int getidleTime();
-	int setidleTime();
-	void setservTime(int stime);
-	void settotalServed(int serv);
-	int getid();
-	void setid(int id);
+	static float averageServiceTime;
+	int time;
+	int serviceTime;
+	queue<Customer *> line;
+	void action();
+	void addCustomer();
 	Teller();
-	Teller(int id, int avgServTime);
-	~Teller();
+	virtual ~Teller();
+
 };
-//
+
 #endif /* TELLER_H_ */

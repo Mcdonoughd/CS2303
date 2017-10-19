@@ -1,35 +1,19 @@
 //Event.cpp by Daniel McDonough and Surya Vadivazhagu
 #include "Event.h"
+#include <iostream>
+int Event::id = 0;
 
-Event::Event(){
-actiontime =0;
-next = NULL;
-}
-//
-Event::~Event(){
-
-}
-
-
-int Event::getactiontime(){
-	return this->actiontime;
+Event::Event() {
+	// TODO Auto-generated constructor stub
+	duration = 0;
+	time = 5;
+	ID = id;
+	id++;
 }
 
-Event* Event::Next(){
-	return this->next;
+Event::~Event() {
+	// TODO Auto-generated destructor stub
 }
-void  Event::Print(){
-	if(this->Next()!= NULL){
-	printf("%d --> %d\n",this->actiontime, this->Next()->actiontime);
-	}
-	else{
-		printf("%d --> NULL\n",this->actiontime);
-	}
-}
-void Event::SetNext(Event* aNext){
-	this->next = aNext;
-}
-
-void Event::setactiontime(int update){
-	this->actiontime += update;
+void Event::action() {
+	std::cout << "WRONG" << std::endl;
 }

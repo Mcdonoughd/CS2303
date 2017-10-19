@@ -7,36 +7,18 @@
 //
 #ifndef CUSTOMER_H_
 #define CUSTOMER_H_
-#include <iostream>
-#include <string>
+
 #include "Event.h"
-class Teller;
-using namespace std;
+#include <cstdlib>
 
-class Customer:public Event{
-
-private:
-	//void action();
-	int ID;
-	float arrTime;
-	int waitTime;
-
+class Customer: public Event {
 public:
-	Customer();
-	Customer(int ID, int simTime);
-	~Customer();
-	int getshortestline(Teller* tellerobjptr,int tellers);
-	void Action(Teller* tellerobjptr,int tellers,int currTime,int simTime,int seed,Stats* stat) override;
-	void addCustomer(Teller* tellerobjptr);
-	int getid();
-	void Print();
-	int getactiontime();
-	void setid(int ID);
-	int getWaitTime();
-	void setWaitTime(int waitTime);
-	int getArrTime();
-	void setArrTime(int arrTime);
-	bool checkid(int num);
+	using Event::action;
+	bool served;
+	int arrivalTime;
+	void action(void);
+	Customer(int time);
+	virtual ~Customer();
 };
 
-#endif /* EVENT_H_ */
+#endif /* CUSTOMER_H_ */
