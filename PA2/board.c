@@ -106,5 +106,5 @@ void printBoard(int gen) {
 		}
 		printf("\n");
 	}
-	printf("\r", rows+1);
+	printf("\r");
 }
