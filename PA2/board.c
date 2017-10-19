@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include "board.h"
 
-#define ANSI_COLOR_RED     "\x1b[31m"
-#define ANSI_COLOR_RESET   "\x1b[0m"
-
 char** B;
 char** B1;
 char** B2;
@@ -103,11 +100,11 @@ void printBoard(int gen) {
 		for (int j = 0; j < cols; j++)
 		{
 			if (B[i][j] == 'x')
-				printf(ANSI_COLOR_RED "x "  ANSI_COLOR_RESET);
+				printf("x ");
 			else
 				printf("%c ", B[i][j]);
 		}
 		printf("\n");
 	}
-	printf("\033[%dA \r", rows+1);
+	printf("\r", rows+1);
 }
