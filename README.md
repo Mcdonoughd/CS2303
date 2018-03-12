@@ -31,7 +31,6 @@ PA5:
     
 qSim:
 &nbsp;    Doodlebug Sim (C++)
-<<<<<<< HEAD
 
 
 Quizzes:
