@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>PA5_djsullivan-nchkhaidze</name>
+=======
+	<name>PA5</name>
+>>>>>>> 49a353fcfe44dc367e758753fb491bb48b4df46c
 	<comment></comment>
 	<projects>
 	</projects>
@@ -9,6 +13,7 @@
 			<name>org.eclipse.cdt.managedbuilder.core.genmakebuilder</name>
 			<triggers>clean,full,incremental,</triggers>
 			<arguments>
+<<<<<<< HEAD
 				<dictionary>
 					<key>?name?</key>
 					<value></value>
@@ -65,6 +70,8 @@
 					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>
 					<value>true</value>
 				</dictionary>
+=======
+>>>>>>> 49a353fcfe44dc367e758753fb491bb48b4df46c
 			</arguments>
 		</buildCommand>
 		<buildCommand>
