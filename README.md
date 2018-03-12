@@ -2,7 +2,11 @@
 This is a repository for WPI CS2303 Systems Programming Assignments for A-term 2017
 
 
-Here you will find the following Assignments:
+Here you will find the following Folders:
+
+
+Books:
+&nbsp;	  Pdfs of the books required for the class
 
 
 PA1:
@@ -27,3 +31,21 @@ PA5:
     
 qSim:
 &nbsp;    Doodlebug Sim (C++)
+
+
+Quizzes:
+&nbsp;	  Holds Answer Keys for Old Quizzes
+
+
+Class Slides:
+&nbsp;	  Copies of the Lecture Slides
+
+
+Labs:
+&nbsp;	  Copies of the Lab Assignments
+
+
+Program Assignments:
+&nbsp;	  Copies of the Program Assignments
+
+  
